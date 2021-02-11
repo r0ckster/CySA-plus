@@ -1,0 +1,1120 @@
+Security Intelligence
+- Process through which data generated in the ongoing use of information systems is collected, processed, analyzed, and disseminated to provide insights into the security status of those systems
+
+Cyber Threat Intelligence
+- Process of investigating, collecting, analyzing, and disseminating information about emerging threats and threat sources to provide data about the external threat landscape
+- think about all bad things (attacker groups, 0-days, malwares)
+
+You want to use both narrative reports and data feeds
+- narrative reports for big picture
+- data feeds for specific things
+
+
+The security intelligence cycle
+- intelligence is a process
+- Requirements (Planning & Direction) -> Collecting & Processing -> Analysis -> Dissemination -> Feedback
+
+----
+
+Intelligence sources
+
+Timeliness
+	- Property of an intelligence source that ensures it is up-to-date
+
+Relevancy
+	- ... matches the use cases intented for it
+
+Accuracy
+	- ... ensures it produces effective results
+
+Confidence Levels
+	- ensures it produces qualified statements about realibility
+
+Proprietary
+- Threat intelligence is very widely provided as a commercial service offering, where access to updates and research is subject to a subscription fee
+
+Closed-Source
+- close source data is data that's derived from the provider's own research and analysis efforts, such as data from honeynets, as they operate plus information that's mined from their other customer systems and suitably anonymized.
+
+Open-Source
+- data that's available for use without a subscription, may include threat feeds similar to commercial providers, and it can contain reputation lists and Malware signature databases
+	- US-CERT, UK's NCSC, AT&T Security (OTX), MISP, VirtusTotal, Spamhaus, SANS ISC Sus Domains
+
+Threat feeds are a from of explicit knowledge (you can write down, see, feel), but implicit knowledge (sense/instinct) is also useful from experience practitioners
+
+OSINT - Open-Source Intelligence
+- This is a method of obtaining information about a person or organization through public records, websites, and social media
+
+----
+
+ISACS - Information Sharing and Analysis Centers
+- started in 1990's
+- For each critical industry, an ISAC was set up, an ISAC is a not-for-profit group set up to share sector-specific threat intelligence and security best practices among its members
+- UK has CISP (Cyber Security Info Sharing Partnership)
+- One for each: Critical Infra, Gov., Healthcare, Financial, Aviation and many others 
+
+ICS, SCADA and embedded system threats are a main focus within critical infra
+
+----
+
+Threat Intelligence Sharing
+
+Disseminating information to different people within org or even outside org
+-  risk management is the process of identifying, evaluating, and prioritizing different threats and vulnerabilities in order for us to reduce their negative impact
+	- reason why we put risk management and security engineering together is because by putting them together, we can start designing the architecture of the hardware, the software, and the network platforms to respond to these different threats and reduce our attack surface
+- Incident Response (IR)
+	- Incident response is an organized approach to addressing and managing the aftermath of a cybersecurity breach or attack
+	- Tactical level threat intelligence
+- Vulnerability Management
+	- practice of identifying, classifying, prioritizing, remediating, and mitigating software vulnerabilities
+- Detection and Monitoring
+	- practice of observing activity to identify anomalous patterns for further analysis
+	- add more rules and definitions based on different observed incidences that have happened either to our organization or partner organizations or one of those commercial data feeds that we're subscribed to
+
+----
+
+Known Threats
+- threat that can be identified using basic signature or pattern matching
+- Malware and Documented exploits
+	- Malware is any software intentionally designed to cause damage to pc, server, network...
+	- Documented Exploit is a piece of software, data, or a sequence of commands that takes advantage of a vulnerability to cause unintended behavior or to gain unauthorized access to sensitive data
+		- Vuln Scanner can find these
+
+Unknown Threats
+- cannot be identified using basic signature or pattern matching
+- Zero-day exploits, Obfuscated malware code, Behavior-based detection, recycled threats, known unknowns, unknown unknowns
+
+	- Behavior-based detection
+		- malware detection method that evaluates an object based on its intended actions before it can actually execute that behavior (heurestical)
+
+	- known unknowns
+		- known unknowns is a classification of malware that contains obfuscated techniques to circumvent signature matching and detection
+
+	- unknown unknowns
+		- contains completely new attack vectors and exploits
+
+----
+
+Malware
+
+- Commodity Malware
+	- GENERIC malicious software applications that are widely available for sale and are easily obtained and used
+	- from darknet
+
+- Targeted or custom malware
+	- TARGETED or CUSTOM malware developed/deployed with a target in mind
+	- higher severity
+
+- Zero-day MALWARE attacks zero-day vulnerability
+
+- ATP's are known unknown threat
+	- going to target financial institutions, healthcare companies, and even governments because they all have large PII data sets and that can be turned into money
+
+- Command and Contorl (C2)
+	- infrastructure of hosts and services with which attackers direct, distribute, or control malware over botnets (botmaster)
+
+- Persistence
+	- ability of a threat actor to maintain covert access to a target host or network
+	- APT is on your network for average 6-7 months before detected
+
+----
+
+Threat Research
+
+Reputational threat research
+- blacklists of known threat sources, such as malware signatures, IP address ranges, and DNS domains
+- tell us known things that we know are bad
+
+IOC - Indicators of compromise
+	- a residual sign that an asset or a network has been successfully attacked or is continuing to be attacked right now
+	- these can be all sorts of different things like a hash value, an IP address, a file being left on the system, or anything else like this, anything that gives us a clue that something has happened on the system
+	- can be unauth software, sus email, sus registery/file system change, unknown port/protocol usage, excessive bandwith usage, roguea hw, service disruption/defacement, sus or aunauth account usage
+	- evidence that attack was successful
+	- IoA (Indicator of Attack)
+		- term used for evidence of an intrusion attempt that is in progress
+
+Behavioral threat research
+- term that refers to the correlation of IoC's into attack patterns
+- TTP (Tactics, Techniques and Procedures)
+	- behavior patterns that were used in historical attacks/actions
+
+Port Hopping
+- APT's C2 application might use any port to communicate from and so it might use port 22 right now. And if it thinks it's being detected it'll jump to port 53. And it'll jump to port 1258
+
+Fast Flux DNS
+- technique that rapidly changes the IP address associated with a domain
+- one domain name associated with multiple IP addresses
+
+----
+
+Attack Frameworks
+
+Lockheed Martin Kill Chain
+- describes the stages by which a threat actor progresses a network intrusion
+- linear model
+- seven step method
+
+	- 1 Reconnaissance
+		- determine methods to use to complete the attack
+		- open source / passive info gathering
+		- then move to active scanning
+
+	- 2 Weaponization
+		- attacker is going to couple payload code that will enable access with exploit code and this will allow them to go after a vulnerability to execute onto that target system
+		- malware created but not sent to victim yet
+	
+	- 3 Delivery
+		- attacker is going to identify a vector by which they can transmit the weaponized code to the target environment
+		- email, usb-drive... get it there
+
+	- 4 Exploitation
+		- weaponized code is actually executed on the target system by whatever mechanism you've done
+		- clicking the link (you send in DELIVERY phase) is when exploitation happens
+
+	- 5 Installation
+		- mechanism that enables the weaponized code to run a remote access tool and achieve persistence on that target system
+		
+	- 6 Command & Control (C2)
+		- weaponized code establishes an outbound channel to a remote server that can then be used to control that remote access tool and possibly download additional tools to help you progress in your attack
+		- you own the system, can remote into / run commands
+
+	- 7 Actions on Objectives
+		- This is where the attacker is typically going to use the access that they've achieved through steps one through six to now start doing what they wanted to do. That may be transferring data from a remote system, such as data exfiltration, or some other goal or motive
+
+
+- kill chain analysis can be used to identify defensive courses of actions by being able to counter the progress of an attack at each stage
+ - Six D's: detect, deny, disrupt, degrade, deceive, destroy
+
+
+
+
+MITRE ATT&CK Framework
+
+- a knowledge base that's maintained by the MITRE Corporation 
+for the listing and explaining specific adversary tactics, techniques, and common knowledge which is where the A-T-T-and-C-K comes from. And these are also known as procedures
+- uses matrices model
+- model for being able to map out an overall adversary and all their different capabilities and capacities that they use in their different attacks
+- pre-ATT&CK tactics matrix is going to align to the reconnaissance and weaponization phases of the cyber kill chain
+
+
+
+Diamond Model of Intrusion Analysis
+
+- framework for analyzin cybersec incidents and intrusions by exploring the relationships between four core features:
+
+	Adversary
+	Capability
+	Infrastructure
+	Victim
+
+Meta-Features: timestamp, phase, result, direction, methodology, resources
+
+
+
+Each models can be used individually or combined, all have their benefits and drawbacks
+
+----
+
+Indicator Management
+
+
+STIX - Structured Threat Infromation eXpression
+
+- a standard terminology for IoCs and ways of indicating relationships between them that's included as part of the OASIS Cyber Threat Intelligence, or CTI framework
+- express in JavaScript Object Notation (JSON) format that consist of "attribute:value" pairs
+- STIX is built from higher-level STIX domain objects, or SDOs, and these can contain multiple attributes and values
+	- SDOs
+		- Observed Data: IP, executabel file...
+		- Indicator: pattern, IoC, TTP
+		- Attack Pattern: known adversary behaviors
+		- Campaigns and Threat Actors: who,why,what
+		- COA (Course of Action): actions or security controls
+- with all SDOs you start creating a connection of these relationship of objects, and this can start indicating what it was, what the targets  were, and what things attributed to it
+- STIX v1 used XML-based format, v2 uses JSON
+
+
+
+TAXII - Trusted Automated eXchange of Indicator Information
+
+- a protocol for supplying codified information to automate incident detection and analysis
+- TAXII used to transmit data between server/clients over secure connection (https, rest api...)
+- STIX can be provided over TAXII
+
+
+OpenIOC
+
+- a framework that was developed by Mandiant that uses XML-formatted files for supplying codified information to automate incident detection and analysis
+
+
+MISP - Malware Information Sharing Project
+
+- MISP provides a server platform for cyber threat intelligence sharing, it provides a proprietary format, but it can also support OpenIOC definitions, and it can import and export STIX CDOs over a TAXII system
+
+
+Threat Modeling
+
+How can the ATTACK be performed?
+What is the POTENTIAL IMPACT to the CIA of the data?
+How LIKELY is the risk to occur?
+What MITIGATIONS are in place?
+
+- Threat modeling is the process of identifying and assessing the possible threat actors and attack vectors that pose a risk to the security of an application, a network or other systems
+
+- Threat modeling can be used against your corporate networks in general, at a large scale
+
+Adversary Capability
+-  a formal classification of the resources and expertise available to that particular threat actor
+- Acquired and augmented (bought hacks)
+- Developed (have some skills, exploit zero-day)
+- Advanced (attack supply chains)
+- Integrated (cyber and non-cyber methods)
+
+Attack Surface
+- the point at which a networker application receives external connections or inputs and outputs that are potential vectors to be exploited by a threat actor
+- The holistic network (routers, switches)
+- Websited or cloud-services (api)
+- Custom software applications
+
+Attack Vector
+- a specific path by which a threat actor, gains unauthorized access to a system
+- Cyber (HW or SW for IT system)
+- Human (coercion, impersonation, force)
+- Physical (local access, touching)
+
+Risk = Likelihood x Impact
+
+
+----
+
+Threat Hunting
+
+- is proactive, IR is reactive
+- potentially less disruptive than pentesting
+
+- establishing a hypothesis -> profiling threat actors and activities
+
+- relies on the regular security monitoring and IR tools (logs, process info, registery changes, SIEM)
+
+- you assume existing rules FAILED when you are threat hunting, things that can bypass the tools
+
+- analyze network traffic, check for C2 IP's
+- analyze the executable process list (valid or sus)
+- analyze other infected hosts (same malicious things?)
+- identify how the malicious process was executed (how to counter?)
+
+- consumes a lot of resources and time, but can yield benefits
+	- improve detection capabilities
+	- integrate intelligence
+	- reduce attack surface
+	- block attack vectors
+	- identify critical assets
+
+
+----
+
+Open-Source Intelligence (OSINT)
+
+- publicly available info plus the tools used to aggregate and search it
+- can allow an attacker to develop any number of strategies for compromising a target
+- public info, social media, HTML code, Metadata
+
+----
+
+Google Hacking
+
+- OSINT techniques that use Google search operators to locate vuln web servers, sites, services
+	- Quotes
+		- specify search more precise
+	- NOT
+		- use the minus sign, exclude result with that string
+	- AND/OR
+		- logical operators
+	- Scope
+		- use 'site', filetype, related, allintitle, allinurl
+		- 'filetype:PDF'
+	- URL Modifier
+		- modifiers added to the result page
+		- &pws=0, &filter=0, &tbs=li:1
+
+GHDB - google hacking database
+- provides db for search strings optimized for locating vuln websites and services
+
+
+Shodan (shodan.io)
+- a search engine that's optimized for identifying vulnerable internet-attached devices
+
+----
+
+Profiling Techniques
+
+Email harvesting
+- OSINT technique used to gather email addr for a domain
+- can be bought, a list of email addresses
+- email Dossier, will test if it's valid
+- if valid, can start social engineering
+
+- "theharvester" cli-tool for social engineering
+
+----
+
+Harvesting Techniques
+
+whois
+- public listing of all registered domains and their registered admins
+
+If DNS service is misconfigured, DNS zone transfer could be allowed
+
+DNS zone transfer 
+- is a method of replicating DNS database entries across a set of DNS servers
+
+DNS harvesting 
+- uses OSINT to gather information about a domain. Things like your subdomains, the hosting provider, the administrative contacts, and other information like that
+
+Website Harvesting
+- technique used to copy the source code of website files to analyze for infomation and vulns
+
+
+Network Forensic Tools
+
+Network traffic must be captured and its data frames decoded before it can be analyzed
+
+SPAN - Switched Port Analyzer
+- allows for the copying of ingress and/or egress communications from one or more switch ports to another
+
+Packet Sniffer
+- hw or sw that records data from frames as they pass using methods like mirrored port or tap device
+
+Network Sniffer should be inside a firewall or close to important server
+
+----
+
+tcpdump
+
+a data-network packet analyzing computer program that runs under a command line interface. And it allows the user to display TCP/IP and other packets being transmitted or received over the network to which the computer is attached
+
+- "-w <filename>" will save capture in a file
+- "-r <filename>" will read the captured file
+- "-X" will show the content of the packets
+
+The -e option includes the ethernet header during packet capture. The -n flag will show the IP addresses in numeric form. The -nn option shows IP addresses and ports in numeric format. The -X option will capture the packet's payload in hex and ASCII formats.
+
+
+----
+
+Wireshark
+
+a free and open-source GUI-based packet analyzer that is used for network troubleshooting, analysis, software and communication protocol development and further education
+
+----
+
+Flow Analysis
+
+FPC - Full Packet Capture
+- capture the entire packet, includes the header and the payload for all traffic that is entering or leaving your network
+- takes much of storage
+
+Flow Collector
+- a means of recording metadata and statistics about network traffic rather than recording each frame
+
+Flow Analysis Tools provides network traffic statistics sampled by a collector
+- allows to highlight trends/patterns -> alerts -> reports
+- visualization tools -> create a map of different network connections and flow patterns
+- can reveal malware / bad behaviour
+
+NetFlow
+- Cisco-developed means of reporting network flow info to a structured db
+
+Flow includes
+- Network protocol interface
+- Version and type of IP
+- Src and dst IP/port
+- IPs type of service
+
+NetFlow provides metadata while packet captures provide complete record of what occurred 
+
+Zeek (Bro)
+- hybrid tool that passive monitors like sniffer and only logs data of potential interest
+- performs normalization of the data and then it stores that data as a tab-delimited or JavaScript Object Notation language, JSON formatted text files --> import to another tool
+
+MRTG - Multi Router Traffic Grapher
+- a tool that's used to create graphs that show network traffic flows through the network interfaces of different routers and switches by pulling those appliances using SNMP
+
+----
+
+IP and DNS Analysis
+
+- Malware used to be configured to contact specific IP/DNS name
+-> Known-bad IP's
+-> Reputation based risk intelligence is used to create IP/URL blacklists
+-> Attackers now use domain generation algorithms to overcome blacklists
+
+DGA - Domain Generation Algorithm
+- a method used by malware to evade blacklists by generating domain names for commanding control networks dynamically
+
+1. Attacker sets up dynamic DNS services (DDNS)
+2. Malware code implements DGA to create list of domain names
+3. A parallel DGA is used to create name records on DDNS service
+4. Malware tries a selection of domains created for C2
+5. C&C server communicates with new seed of DGA to prevent being blocked
+
+Fast Flux Network
+- a method used by malware to hide the presence of C2 networks by continually changing the host IP addresses in the domain records, using domain-generated algorithms
+
+How to detect DGA?
+- lots of call outs to random named domains
+- high rate of NXDOMAIN errors when resolving DNS
+
+How to mitigate DGA?
+- use Secure Recursive DNS Resolver
+	- This is going to allow one trusted DNS server to communicate with several other trusted DNS servers to hunt down the IP address and return it to the client
+
+
+----
+
+URL Analysis 
+
+Uniformed Resource Locator
+
+- Activity that's performed to identify whether a link is already flagged on an existing reputation list and if not to identify what malicious script or activity might be coded within it
+	- Resolving percent encoding
+	- Assessing redirection of the URL
+	- Showing source code for scripts in URL
+
+HTTP Method
+- a set of request methods that indicates the desired action to be performed for a given resource
+- a request is going to contain a method, a resource, a version, the header and the body of the request.
+- GET, the principle method used with HTTP and is used to retrieve a resource
+- POST, used to send data to the server for processing by the requested resource
+- PUT, creates or replaces the requested resource
+- DELETE, used to remove the resource
+- HEAD, retrieves the headers for a resource and ignores the body
+
+- Data submitted via URL is delimited by the ? character
+
+- Query parameters are usually formatted as one or more name=value pairs with ampersands (&) delimiting each pair
+
+- A hash tag and a hash tag is used to indicate a fragment or an anchor ID, and it's not actually processed by your Web server
+
+HTTP Respond Codes
+- the header value returned by a server when a client requests a URL
+-200, indicates a successful GET or POST request (OK)
+-201, PUT request has succeeded in createing a resource
+-3xx, indicates that a redirect has occurred by the server
+-4xx, indicates an error in the client request
+-400, request could not be parsed by the server
+-401, request did not supply authentication credentials
+-403, request did not have sufficient permissions
+-404, requested a non-existent resource
+-5xx, indicates a server-side issue
+-500, general error on the server-side of the application
+-502, bad gateway has occurred when server is acting as proxy
+-503, overloading of the server -> causing service unavailability
+-504, gateway timeout -> issue with the upstream server
+
+Percent Encoding
+- a mechanism to encode eight bit characters that have a specific meaning in the context of a URL, also known as URL encoding
+- URL can contain only unreserved and reserved characters from the ASCII set
+- Unreserved: a-z A-Z 0-9 - . _ ~
+- Reserved: :/?#[]!$'()*+,;=
+- URL cant contain unsafe characters: null string termination, carriage return, line feed, end of file, tab, space and \<>{}
+- percent encoding ALLOWS a user-agent to submit any safe or unsafe character (or binary data) to the server within the URL
+
+- Percent encoding can be misused to obfuscate the nature of a URL. This allows them to encode unreserved characters and submit malicious input as a script or binary or some other method like that to perform directory transversely and other bad things
+
+- Some really tricky attackers have started to do what's called double encoding, and they can double encode the URL by encoding that percent sign, too
+
+
+
+----
+
+Firewall logs
+
+ACL
+-a list of permitted and denied network connections based on either an IP address, a port, or the applications in use
+
+4 types
+-permitted or denied
+-port and protocol usage
+-bandwidth utilization, duration and volume usage
+-audit log of the address translation (NAT/PAT) that occurred
+
+iptables
+-a Linux-based firewall that uses the syslog file format for all of its logs
+
+Windows Firewall
+- uses a Windows-based firewall that uses the W3C Extended Log File Format
+
+Blinding Attack
+- a condition that occurs when a firewall is under-resourced and it simply can't log all the data fast enough, and therefor some of that data is going to be missing in the logs
+
+Log retention 
+-should be determined by the number of events that are being generated and your available storage capacity
+-also depends on the business case
+
+
+----
+
+Firewall Configurations
+
+DMZ - Demilitarized Zone
+- physical or logical sub network that contains and exposes an organization's external facing services to an untrusted, usually larger network, such as the internet
+
+ACLs 
+-processed from top to bottom, most specific at top
+-block incoming req from internal/private, loopback, multicast IP ranges
+-block incoming req that should be only local (icmp,dhcp,ospf,smb, etc.)
+-config ipv6 to either block all or allow it on authorized hosts/ports only
+
+Drop vs Reject
+-deny rule can either drop a packet or explicitly reject it by sending a TCP reset, if you're doing a TCP connection, or an ICP port or protocol unreachable, if you're using UDP back to the requester
+-dropping makes it harder to identify port states
+-Firewalking, reconnaissance technique, occur when an attacker finds an open port on a firewall and then they send a packet with a TTL,
+a time to live, of one past the firewall to find its host
+	-block outgoing ICMP status messages to counter
+
+Egress Filtering
+- ACL rules to the traffic leaving our network to prevent malware from communicating to command and control servers
+-only allow whitelisted application ports and destination addresses
+-restrict DNS lookups to trusted and auth DNS services
+-block access to known bad IP addr (blacklist) - drop
+-block all inet access from host subnet that dont need it (ICS/SCADA)
+-can't block 100% of bad traffic, can use cloud-based HTTPS, social media etc.
+
+Black Hole
+-means of mitigating DoS or intrusion attacks by silently dropping (discarding) traffic
+-can stop a DDoS attack at the routing layer by sending traffic to the null0 interface
+-uses less resources than ACL, but can cause collateral damage for legit users
+
+Dark Nets
+-unused physical network ports or IP address space within a local network often used by attackers
+-redirect all dark nets to black hole until they are needed
+
+Sink Hole
+-DoS attack mitigation strategy that directs all that traffic that's trying to flood a target IP to a different network for analysis
+-better than black hole if you want to analyse the attack
+
+----
+
+Proxy logs
+
+Forward Proxy
+-server that mediates the comms between a client and another server, can filter or modify comms and provide caching services to improve performance
+
+Nontransparent Proxy
+- redirect requests and responses for clients configured with the proxy address and port
+-you will know there's a proxy
+
+Transparent Proxy
+- redirect requests and responses without the client being explicitly configured to use it
+-done at network layer
+
+-Proxies that are set up to intercept or block traffic can also record the rule that the requests matched to determine the employee's intent
+
+Reverse Proxy
+-protects servers from direct contact with client requests
+-logs can be analysed for IoC, attacks etc.
+ 
+-----
+
+Web Application Firewall Logs
+
+WAF
+-designed specifically to protect sw running on web servers and their backend db's from code injection and DoS attacks
+-used to prevent web-based exploits and vulns like SQL/XML injection, cross-site scripting (XSS) attacks
+-many use JSON (javascript object notation) format to store their logs
+	-time of event, severity, URL parameters, HTTP method used, context for the rule
+
+----
+
+IDS/IPS configuration
+
+IDS
+-software or hardware system that scans, audits, and monitors the security infrastructure for signs of an attack in progress
+
+IPS
+-software or hardware system that scans, audits, and monitors the security infrastructure for signs of an attack in progress and can actively block them
+
+Snort
+-opensource software that's available for Windows and selected Linux distribution
+
+Bro (Zeek)
+- opensource IDS for Unix and Linux platforms. It's going to contain a scripting engine, which can be used to act on significant events,
+which we call notices, by generating an alert and implementing some sort of shunning mechanism
+
+Security Onion
+-opensource Linux-based platform for security monitoring, incident response, and threat hunting. And it bundles together a lot of different tools like Snort, Suricata, Zeek, Wireshark, NetworkMiner,
+along with a bunch of other tools like log management and incident management tools
+-like Kali Linux for network defenders
+
+----
+
+IDS/IPS Logs
+
+Log entry created every time rule matched in IDS/IPS
+-over-logging a problem
+
+IDS/IPS sw provides many options for outputting log entries
+-unified output (binary file, machine readable)
+-syslog (to siem or syslog center)
+-CSV - comma separated values
+-tcpdump (pcap)
+-input into a siem
+
+-Alerts should be monitored in real time to determine if incident
+-Analysts can create custom rules for org needs
+
+Snort Rule Format
+- Action Protocol SrcIP SrcPort Direction DstIP DstPort (Rule Option; RuleOption; ...)
+	- Action field is set to alert,log,pass,drop or reject
+	- Source and Destination IP/port are usually keyword (any) or variable ($EXT_NET or %HOME_NET) or static value
+	- Direction can be unidirectional (-> or <-) or bidirectional (<>)
+	- Rule Options
+		- msg, flow, flags, track, reference, classtype, sid and rev
+
+----
+
+Port Security Configuration
+
+- refers to blocking unauthorized applications service ports on hosts
+and firewalls, or the physical and remote access ports that are used to allow a host to communicate on the local network
+- Appliances such as switches, routers, and firewalls are all subject to software vulnerabilities and patching shortfalls in the same way that a server is
+- many network appliances still running vuln, outdate or unpatched versions of linux kernel
+- disable webgui and use SSH/CLI for security
+
+-use ACLs to restrict acces to designated hosts
+-monitor the number of designated interfaces
+-deny internet access to remote management (use VPN)
+-if rogue devices found, enforce port security
+	-physical port security
+		- physical access to the switch ports, restrict to auth staff
+		- behind locks
+		- patch only needed jacks
+	-mac filtering
+		-apply an access control list to a switch or an access point. So only clients with an approved MAC address can connect to it
+		-static, prone to errors, easy to sniff
+	-NAC - network access control
+		- a general term for the collective protocols, policies and hardware that authenticate and authorizes access to network after device level
+
+----
+
+NAC Configuration
+
+Network access control provides the means to authenticate users and evaluate device integrity before a network connection is permitted
+
+Relies on 802.1X
+-802.1X is a standard for encapsulating EAP, which is the Extensible Authentication Protocol, and its communications over a LAN or wireless LAN
+
+Port-based NAC
+- a switch or router can perform some sort of authentication of the attached device before we activate that port
+
+A broader NAC solution that allows administrators to devise policies
+or profiles describing a minimum security level configuration that all the devices must meet before being granted network access
+
+Key Features
+- Posture assessmenet
+	- the process of assessing the endpoint for compliance with the health policy (AV, patch-level, up-to-date, scans)
+- Remediation
+	- the process and procedures that occurs when your device doesn't meet the minimum security policy (update AV, scan, then can login)
+- Pre- and Post-admission Control
+	- the point at which the client devices are granted or denied access based on their compliance with the health policy
+
+Endpoint health policy is just one of the different rule-based methods that you can use for granting or denying access
+- can be time-based
+- location-based
+- role-based (also called adaptive NAC)
+- rule-based
+
+----
+
+Endpoint Analysis
+
+AV
+- sw that's capable of detecting and removing virus infections, and in most cases, other types of malware, such as worms, Trojans, rootkits, adware, spyware, password crackers, network mappers, Denial of Service tools, and others
+
+HIDS/HIPS
+- a type of IDS or IPS that monitors a computer system for unexpected behavior and drastic changes to the system's state on a given endpoint
+
+EPP
+- a software agent and monitoring system that performs multiple security tasks. They can do things like anti-virus. It can do host intrusion detection or prevention systems, firewall, data loss prevention, or DLP, encryption
+
+EDR
+- sw agent that collects system data and logs for analysis by a monitoring system to provide early detection of threats
+
+UEBA
+- User and Entity Behavior Analytics
+- system that can provide automated identification of sus activity by user accounts and computer hosts
+- more like analysing process of the data you're gathering
+- heavily depended on AI
+
+
+Many companies are starting to market advanced threat protection, ATP, advanced endpoint protection, AEP, and NextGen AV, which is NGAV. And all of this just becomes essentially a hybrid of the different technologies we talked about before, like the endpoint protection platform, the endpoint detection response, or the user and entity behavior analytics
+
+----
+
+Sandboxing
+
+Computing environment that's isolated from the host system to guarantee that the environment runs in a controlled secure fashion, and that communication links between the sandbox and the host are usually completely prohibited
+
+-determine if file is malicious
+-affects of the file on a system
+-dependencies with files and hosts
+-allows quickly to test malware in multiple environments
+-monitor system changes
+-execute known malware
+-identify process changes
+-monitor network activity
+-monitor system calls
+-create snapshots
+-record file creation/deletion
+-dump vm memory
+-sandbox should be used only for malware analysis
+
+Tools/VM's: cuckoo, flare vm
+
+For complex analysis you need to create honeypot lab
+
+----
+
+Reverse Engineering
+
+-Process of analyzing the structure of hardware or software to reveal more about its functions (more like static)
+-Malware reverse engineer can determine who wrote the code by learning patterns
+-Malware writers often obfuscate the code -> harder to reverse
+
+Disassembler 
+- is a computer program that translates that machine language into assembly language
+
+Machine Code
+-binary code executed by the processor, typically it's represented by two hex digits for each byte, and each byte is eight ones and zeros
+
+File Signature (or Magic Number)
+-the first two bytes of a binary header, and it indicates the file type
+-https://www.filesignatures.net/
+-Windows portable exe file (EXE,DLL,SYS,DRV,COM) will always start with 4D 5A in HEX, MZ in ASCII, or TV in Base64 encoding
+
+Assembly Code
+-native processor instructions used to implement the program
+-human can read, but not easy
+
+Decompiler
+- sw that translate binary/low-level machine language code --> higher level code
+
+High-level Code
+-real or pseudocode in human readbable form, easier to identify functions, variables, and programming logic used
+
+Reverse engineers attempt to identify malware by finding STRINGS to use as a signature for rule-based detection
+- string: any squence of encoded characters that appears within the executable file
+- if a malware contains a string with a function called InternetOpenUrl and another string that says URL, you probably can guess that it's trying to attempt to download something from that web address as part of the malware
+
+Strings tool
+- will dump all the strings that are over three characters in ASCII or Unicode encoding to a text file or to your screen so you can then look at it and analyze it yourself
+
+Program Packer
+- a method of compression in which the executable is mostly compressed, and the part that isn't compressed basically just contains code to decompress the executable
+- packed program, a type of self-extracting archive
+- until unpacked, can mask strings etc.
+- packed program not always malware
+
+
+----
+
+Malware Exploitation
+
+-Exploit technique describes the specific method by which malware code infects a targeted host
+
+-Modern malware, on the other hand though, uses fileless techniques to avoid detection by signature-based security systems like antivirus and host-based intrusion detection systems.
+
+-By being fileless, this means that the malware is executed directly as a script or a small piece of shell code that creates a process in the system memory
+
+1. Dropper or downloader
+2. Maintain access
+3. Strengthen access
+4. Actions on objectives
+5. Concealment 
+
+Dropper
+- malware designed to install or run other types malware embedded in a payload on an infected host
+
+Downloader
+- connect to the internet to retrieve additional tools after the initial infection by a dropper
+
+Shellcode
+-lightweight code designed to run an exploit on the target, may include script or binary code
+
+Code Injection
+-exploit technique that runs malicious code with the identification nuber of a legit process
+	- masquerading
+	- dll injection / sideloading
+	- process hollowing
+
+Droppers also use some anti-forensic techniques to help prevent detection and analysis
+
+Living of the Land
+- an exploit technique that uses standard system tools and packages to perform their intrusions
+- more difficult to detect
+
+----
+
+Behavior Analysis
+
+Threat hunting and security monitoring must use behavioral-based techniques to really identify infections
+
+Sysinternals
+- a suite of tools designed to assist with troubleshooting issues with Windows. It was originally made for system administrators, but a lot of these tools are well-suited to investigate security issues as well
+
+Process Explorer 
+-can filter out legitimate activity, what we know as known-good, and that way we can identify very quickly what is anomalous behavior
+
+System Idle (PID 0) and System (PID 4)
+- kernel-level binary, parent of the first user-mode process (Session Manager SubSystem - smss.exe)
+
+Client Server Runtime SubSystem (csrss.exe)
+- manages low-level Windows functions, normal to see several as long as laucnhed from %SystemRoot%\Sytem32 and no parent
+
+WININIT (wininit.exe)
+- manages drivers/services and should only have single instance running as a process 
+
+Services.exe
+- hosts nonboot drivers and background services, should have only one instance of services.exe running as a child of wininit.exe, other service processes showing a child of services.exe or svchost.exe
+
+Services should be started by SYSTEM, LOCAL/NETWORK SERVICE accounts
+
+Local Security Authority SubSystem (lsass.exe)
+- handles authentication and authorization services for the system and it should have a single instance running as a child of wininit.exe
+
+WINLOGON (winlogon.exe)
+- manage access to the user desktop and it should only have one instance of each user session with the Desktop Window Manager, the dwm.exe, as a child process in most of the modern versions of Windows
+
+USERINIT (userinit.exe)
+- sets up the shell, typically your explorer.exe file, and then it quits so you should only see this briefly during your log-on process
+
+Explorer (explorer.exe)
+- This is the typical user shell and it's launched with the user's account privileges rather than the system's and it's likely going to be the parent for all of the processes that are started by the logged on user
+
+
+What might look sus?
+1. process name you don't recognize
+2. process name that is similiar to legit system process
+3. processes that appear without icon, version, desc, company name
+4. processes that are unsigned, especially from known company
+5. process whose digital signature doesn't match publisher
+6. process with no parent/child relationship with principle Win process
+7. any process hosted by Win utilities, like explorer, notepad, task manager...
+8. any process packet or compressed (highlighet purple in Process Explorer)
+
+What do you do when you find sus?
+1. identify how the process interacts with the Registry and the file system
+2. How is the process launched?
+3. is the image file located in the system folder or temp?
+4. what files are manipulated by the process?
+5. does the process restore itself upon reboot after deletion?
+6. does system privilege or service get blocked if you delete process?
+7. is the process interacting with the network?
+
+UEBA products can automate this process...
+
+
+----
+
+Malware Analysis
+
+"floss"
+"process dump"
+
+----
+
+EDR Configuration
+
+-Requires tuning to reduce FPs
+
+-Virustotal
+	-inspect your items with over 70 different antivirus scanners and URL and domain blacklisting services, in addition to a myriad of other tools they have to extract signals from the studied content
+
+-Malware samples
+	-submit them to your antivirus company or your cyber threat intelligence vendor
+
+-Your org may also create custom malware signature or detection rules
+
+MAEC - Malware Attribute Enumeration and Characterization Scheme
+- standardized language for sharing structured information about malware, and it is complimentary to STIX and TAXII to improve the automated sharing of threat intelligence
+
+YARA
+- multi-platform program that runs on windows, Linux and Mac OS X, and allows you to identify, classify and describe malware samples
+- YARA rule is a test for matching certain string combinations within a given data source and that data source can be a binary file, a log file, a packet capture, or even an email
+
+
+----
+
+Blacklisting and Whitelisting
+
+blacklisting 
+-process of blocking known applications, services, traffic, or other transmissions to and from your systems
+- blacklists are useful in incident response because of its ability to block the source of malware
+- limitations
+		1. risk of false positive to block legit traffic
+		2. you dont know everything that should be blocked
+
+whitelisting
+-process of allowing only known applications, services, traffic, and other transmissions to and from your systems
+- security configuration list is where access is always going to be denied to everybody, unless they're on the whitelist
+- whitelisting can be really effective as a fallback posture, especially when you're doing an incident response
+- Whitelists are incredibly restrictive, and they can prevent users and systems from transmitting data to new or changed recipients, so you need to make sure you're constantly fine-tuning these whitelists
+
+Execution Control
+- process of determining what additional software may be installed on a client or server beyond its baseline
+- can be configured as white- or blacklisting approach
+- on Windows
+	- SRP - Software Restriction Policies (GPO object)
+	- AppLocker
+	- WDAC - Windows Defender Application Control
+- on Linux
+	- MAC - Mandatory Access Control
+	- LSM - Linux Security Module
+		- SELinux and AppArmor two well-known
+
+Configuration Management!
+- large changes should be preceded by a risk assessment and business impact analysis
+
+
+
+Email IOCs
+
+Spam
+-unsolicite and unwanted junk email sent out in bulk
+
+Phishing
+-fraudulent practice of sending emails purporting to be from reputable companies to get info (pi, cc, pw)
+
+Pretext
+-form of social engineering, sender lies and provides a false motive to obtain data (like PayPal message)
+
+Spear Phishing
+-email spoofing attack that targets a specific organization or individual by seeking unauthorized access to sensitive information
+
+Impersonation
+- an attack in which an adversary successfully assumes the identity of one of the legitimate parties in a system or in a communications protocol
+
+BEC - Business Email Compromise
+- an impersonation attack, in which the attacker gains control of an employee's account and then uses it to convince other employees to perform fraudulent actions
+
+Email spoofing
+- send out the message and make it look like it's coming from a particular person
+
+Forwarding
+- when a phishing email is going to be formatted so it appears to have come as part of a reply or a chain
+
+
+Many spoofing attempts can be detected by a close examination of the internet headers that are attached to a message
+
+
+----
+
+Email Header Analysis
+
+email internet header
+- is a record of the email servers involved in transferring an email message from the sender to a recipient
+
+Attackers can exploit the fact that there are actually three sender address fields inside of an email
+1. Display From - user-friendly field
+2. Envelope From - various labels hidden from mail client
+3. Revceived From/By - list of the MTAs that processed email
+
+Most headers not displayed by email client on default
+
+X headers indicate custom headers that are controlled by the SMTP server administrator
+
+
+----
+
+Email Content Analysis
+
+Attacker must craft some sort of payload to complete the exploit when a vic opens a msg
+
+MIME - Multipurpose Internet Mail Extensions
+- allows a body of an email to support formats like HTML, RTF, binary data encoded as Base64 ASCII characters, and attachments
+
+malicious payload,
+- which is an exploit or an attachment that contains some sort of malicious code implemented within the message body
+
+exploit
+- message data contains scripts or objects that target some vuln in the mail client
+
+attachment
+- message contains file attachment in hope user executes it
+
+Embedded Link
+- links that can be comprised of a friendly string plus the URL or a shortened URL to hide the identity of the real target
+- never click links from email msg
+
+Missing or poorly formatted email signature block is an indicator for a phishing email
+
+
+----
+
+Email Server Security
+
+Spoofing attacks can be mitigated by configuring authentication for your email server systems
+
+SPF - Sender Policy Framework
+- DNS record that identifies the host authorized to send mail for the domain with only one being allowed per domain
+
+DKIM - DomainKeys Identified Mail
+- provides a cryptographic authentication mechanism for mail using a public key published as a DNS record
+- DKIM can either replace or be used with SPF
+
+DMARC - Domain-Based Message Authentication, Reporting, and Conformance
+- framework is used for ensuring proper applications of SPF and DKIM utilizing a policy that's published as a DNS record
+- DMARC can use either SPF or DKIM or both
+
+Cousin Domains
+- a domain name system domain that looks similar to another name when it's rendered by a mail user agent (MUA)
+- diontraining.com VS diontrainimg.com
+- DMARC, DKIM or SPF wont solve this problem
+
+
+----
+
+SMTP Log Analysis
+
+typically formatted in request/response fashion
+
+-time of request/response
+-address of recipient
+-size of message
+-status code
+	- Code 220, server is ready
+	- Code 250, message is accepted
+	- Code 421, service is not available
+	- code 450, server cannot access the mailbox to deliver msg
+	- code 451, local server aborted action due processing error
+	- code 452, local serve has insufficient stroage space available
+
+
+----
+
+Email Message Security
+
+S/MIME - secure multi-purpose internet mail extensions
+- ability for an email to have an encryption standard that adds digital signatures and public key cryptography to traditional MIME communications
+
+Every user has to be issued a digital certificate containing his or her public key in order for them to use S/MIME
+- also every user needs private key
+
+1. Let's assume I want to send Mary some information. Well if I wanted to do that using S/MIME, first, I would have to send Mary my digital certificate that contains my public key and it validates my digital ID, my distinguished subject name and email address, and then, I'm going to sign this message using my private key
+2. After that, Mary is going to use the public key in the certificate to decode my signature and the signature of the CA, which is the authority who signs those public and private keys. And this is going to validate my digital certificate and the digital ID and then she can decide if she's going to trust me or not. In this case, she would because she saw that it was validated using the CA
+3. Then, we go into the third step and Mary is going to respond with her digital certificate which has her public key and I am going to be able to follow the same process and I'd be able to start deciding to trust Mary.
+4. So at this point, both Mary and I have each other's public key. Now, both Mary and I have each other's certificates in our trusted certificate stores. And this means we both have each others public keys or a copy of that. So now, we could start sending information securely.
+
+A digital signature encrypts a hash of the message to provide integrity and non-repudiation
+
+Encrypting the message with the receivers public key ensures confidentiality
+
+The email client is going to be able to determine for you if your digital signature is valid and will display an icon for you when it does that
+
+
+----
+
+
+
+
+
