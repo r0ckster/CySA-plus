@@ -1,0 +1,826 @@
+https://www.incidentresponse.com
+
+
+IR Phases
+
+-Incident, violating an explicit or implied sec policy
+
+IR Procedures
+- procedures/guidelines for priorities, actions and responsibilities in sec incidents
+- divided to preparation, detection/analysis, containment, eradication/recovery, and post-incident stages
+
+1. Preparation
+-make system resilient to attack
+-hardening systems, policies/procedures, confidential lines on communication
+
+2. Detection/analysis
+-determine if incident taken place, triage it, notify relevant stakeholders
+
+3. Containment
+-limit the scope and magnitude of the incident
+-secure the data and limit impact to business
+
+4. Eradication/Recovery
+-remove the cause
+-bring system back to secure state
+
+5. Post-Incident
+-analyze the incident and response
+-identify if could be improved
+
+
+Incident response team is key people that are going to be available to respond to any incident that meets the severity and priority thresholds that are set out by your incident response plan
+- IR Manager
+- Security analysts
+	- Triage analyst
+	- Forensic analyst
+- Threat researcher
+- Cross functional support
+
+A CSIRT is the computer security incident response team. And your CSIRT should be the single point of contact for security incidents
+- can be part of SOC or independent team or outsourced
+
+----
+
+Documenting Procedures
+
+1. preparation part + training
+
+https://www.incidentresponse.com
+
+Who to call?
+- call list, pre-defined list for notification and esc
+- hierarchy order
+
+Incident Form
+- record detail about the incident, case/job number
+	- date,time, location
+	- reported, incident handler names
+	- how incident detected
+	- type of incident
+	- scope
+	- incident description and event logging
+
+----
+
+Data Criticality
+
+-private/confidential data breach, will take priority over other incidents
+
+PII
+- full name, birthday, social sec number
+
+SPI - sensitive personal information
+- GDPR, beliefs, religioin, political opinion, racial/ethnic origin etc.
+
+PHI - Personal Health Information
+- medic records etc.
+- HIPAA
+
+Anonymized or de-identified data = identifying data is removed completely
+
+
+Financial Information
+- data stored about bank acco, payroll, tax returns, CC
+- PCI-DDS
+
+Intellectual Property
+- info created by org, usually about products it makes or provides
+
+Corporate Information
+- confidential data owned by company, like product, sales, marketing etc.
+- info about profit, cash flow, salaries etc
+
+High Value Assets
+- infosystem that processes data critical to mission essential function
+- maintain CIA, critical for org success
+
+
+----
+
+Communication Plan
+
+-team must have secure method for communications
+- out-of-band communication
+	- different method of comms compared to primary communication method
+	- signal vs email
+
+-backup comm plan?
+-up-to-date contact list
+
+how to notify
+-email,web portal,call, in-person, voicemail, formal report
+
+Prevent unauth release of info outside of the CSIRT
+
+----
+
+Reporting Requirements
+
+notifications that must be made to the affected parties in the event of a data breach as required by legislation or regulation
+
+5 types of breaches
+
+1. Data Exfiltration
+-attacker breaks in the system, transfers data to another system
+
+2. Insider Data Exfiltration
+- employee or ex-employee transfers data 
+
+3. Device Theft/Loss
+- mobile/laptop stolen or lost
+
+4. Accidental Data Breach
+- public disclosure of info
+- unauth transfer caused by human error / misconfig
+
+5. Integirty/Availability Breach
+- corruption of data or destruction of a system
+
+
+Laws and regulations govern req for reporting
+
+
+----
+
+Response Coordination
+
+IR will req coordination between different departments
+
+-Senior Leadership
+	-exec / managers who are responsible for business operations and functional areas
+
+-Regulatory Bodies
+	-gov orgs that oversee the compliance with specific regulations and laws
+
+-Legal
+	-business or orgs legal counsel is reponsible to mitigate risk from civil lawsuits
+
+-Law Enforcement
+	-may provide services to assist, prepare legal action against attacker
+	-decision to involve law made by senior exec + legal
+
+-HR
+	-ensure no breaches of emloyment law or contracts during IR
+
+-PR - Public Relations
+	- manage negative publicity from a serious incident
+
+
+CSIRT will be asked info on downtime, scope and other relevant details
+
+
+----
+
+Training and Testing
+
+-Trainging, education of staff to understand processes etc
+-different trainging req based on roles
+-not only technical, also soft skills
+
+-Testing, practical exercising of IR procedures
+-simulation incident is costly
+
+Tabletop Exercise (TTX)
+- uses incident scenario againsta a framework of controls or a red team
+- "role playing"
+- less expensive
+- theoretical exercise
+
+PenTest
+-red team attempts to conduct an intrusion onto the network using a specific scenario based on threat modeling
+-always agree methodology and rules of engagement
+-metasploit, cobalt strike, kali, parrotOS, commando OS
+
+
+
+OODA Loop
+
+Observe
+-identify problem/threat, gain overall understanding of the internal and external environment
+-data gathering
+-alert in SIEM, user clicked virus link etc
+
+Orient
+-reflect on what has been found > what should be done next
+-identify what permissions user has, changes done to system, goal of attacker
+
+Decide
+-make suggestion of action/response plan while thinking potential outcomes
+-if malware was installed, isolate the system
+
+Act
+-carry out the decisions and changes need to be made
+-isolate users system, begin observe again
+
+----
+
+Defensive Capabilities
+
+What your org has?
+
+Detect
+-identify the presence of attacker and their resources
+-SIEM is defensive capability
+
+Destroy
+-render attackers resources useless or ineffective
+-only govs can really do this, not orgs
+
+Degrade
+-reduce attackers capabilities, perhaps temporarily
+-block IP etc
+
+Disrupt
+-Interrupt attackers comms or frustrate their efforts
+-block IP etc
+
+Deny
+-Prevent attacker from learning you or accessing info assets
+
+Deceive
+-supply false info to attacker
+-honeypot
+
+
+----
+
+Detection and Analysis
+
+-Determine if incident taken place, triage it, notify stakeholders
+-most orgs use SIEM
+-known IOC can trigger alert and automati categorization and priorization
+	-can be technical and non-technical
+	-AV, NIDS/NIPS,HIDS/HIPS,System logs,network device logs, SIEM data, Flow control device
+	-Internal/external personnel, cyber-threat intelligence
+-detected indicators must be analyzed and categorized
+	- benign (FP), sus, malicious
+
+----
+
+Impact Analysis
+
+-Damage to data integrity, unauthorized changes, theft of data or resources, disclosure of confidential data, interruption of services, system downtime
+
+Impact-Based Approach
+-categorization, focuses on severity of incident, like emergency, significant, moderate or low
+-based on scope and cost, usually preferred by industry
+	-org, localized, immediate and total impact
+
+
+Taxonomy-based Approach
+-definec categories at the top level, like worm, DDoS, internal privilege abuse etc
+
+
+----
+
+Incident Classification
+
+-data integrity
+	- incident where data is modified
+-system process criticality
+	- threats/disrupts mission essential business function
+-downtime
+	- degrades or interrupts asset/system... DDoS
+-economic
+	- incident creates short or long-term costs
+-data correlaltion
+	- incident that is linked to TTP of known attacker group
+-reverse engineering
+	- malware goes with ATP X
+-recovery time
+	- incident that requires extensive recovery time
+-detection time
+	- incident which was not discovered quickly
+
+
+----
+
+Containment
+
+Rapid containment is important in IR
+- limit the scope and magnitude of the incident
+
+1. Ensure safety/sec of all personnel
+2. Prevent ongoing intrusion/data breach
+3. Identify if intrusion is primary or secondary attack
+4. Avoid alerting attacker that he's been discovered
+5. Preserve any forensic evidence of intrusion/attack
+
+Isolation
+-mitigation strategy, removing affected component from larger environment
+-ensure there is no interface between two (airgap)
+-air gap is least stealthy option
+-disable account
+
+Segmentation
+-achieve isolation using network technologies and architecture
+-VLANs, subnets, fw ACLs, honeypots
+-can reroute attackers traffic to honeypot
+
+
+
+
+
+Eradication
+
+-Remove the cause of the incident, bring system back to normal stage
+-complete removal and destruction of the cause of incdnt
+-simplest way is re-imaging
+
+Sanitization
+- a group of procedures that an organization uses to govern the disposal of obsolete information and equipment, including storage devices, devices with internal data storage capabilities or paper records
+- CE (cryptographic erase)
+- Zero-fill, overwrite drive with 0s
+	- ONLY reliable with HDD, not ssd/hybrid
+- SE - Secure Erase
+	- sdd sainitizing with manufacturers sw
+- Secure Disposal
+	- physical destruction of media
+
+----
+
+Eradication Actions
+
+Reconstruction
+-method of restoring system that has been sanitized using scripted installation routines and templates
+
+Reimaging
+-restoring sanitized system using image-based bu
+
+Reconstitution
+-restoring system that cannot be sanitized using manual removal, reinstallation and monitoring processes
+1.analyze processes/network activity for malware
+2.terminate sus processes and delete them
+3.identify/disable autostarts
+4.replace contaminated processes with clean versions
+5.reboot, analyze for signs of continued malware infection
+6.analyze firmware, USB etc, if malware still there
+7. if test negative, reintroduce system back to production environment
+
+
+----
+
+Recovery
+
+-actions taken to ensure the hosts are fully reconfigured to operate the business workflow the way they were performing those things before the incident occurred
+-longest and challenging part of IR
+-steps depend on the incident
+
+----
+
+Recovery Actions
+
+Patching
+-scan,patch,scan
+
+Permissions
+-should be reviewed after major incident
+
+Logging
+-ensure that scanning and monitoring are functioning properly, not modified
+
+System Hardening
+-secure confs and settings
+-most effective preventative measure when designing
+	-deactivate unnecessary components
+	-disable unused user accounts
+	-implement patch management
+	-restrict host access to peripherals
+	-restrict shell commands
+
+1.uninstall anything youre not using
+2.if you need it, patch it frequently
+3.always restrict users to least privilege
+
+----
+
+Post-Incident Activities
+
+Occurs once the attack or immediate threat has been neutralized, and the system has been restored to secure operation
+
+Analyze the incident/response for improvements
+
+1. Report Writing
+-essential analyst skill, comm about the incident
+-clearly marked for the intended audience
+
+2. Incident Summary Report
+-a report written for a specific audience with key information about the incident for their use
+- info about how incident occurred, impact, lessons learned etc.
+-can be high-tec or low
+
+3. Evidence Retention
+-the preservation of evidence based upon the required time period, defined by regulations if there's a legal or regulatory impact that's caused by the incident
+
+----
+
+Lessons Learned
+
+-analysis of the events, how to improve response processes in the future
+
+Six Questions
+1. Who was the adversary?
+2. Why was the incident conducted?
+3. When did the incident occur?
+4. Where did the incident occur?
+5. How did the incident occur?
+6. What controls could have mitigated it?
+
+After-Action Report or Lessons Learened Report
+- providing insight to incident and how to improve
+- IR Plan update
+- IoC Generation and Monitoring
+- Change Control Process
+
+
+Risk Identification Process
+
+-ERM (Enterprise Risk Management)
+- comprehensive process of evaluating, measuring, and mitigating the many different risks that pervade an organization
+
+-keep data confidential
+-avoid financial losses
+-avoid legal issues
+-maintain positive brand image
+-ensuring COOP - (continuity of operations plan)
+-establish trust and mitigating liability
+-meeting stakeholders objectives
+
+Frame
+-establish a strategic risk management framework that is supported by decision makers, those key stakeholders, at the top tier of the organization
+
+Assess
+-identify and prioritize business processes/workflow
+
+Respond
+-mitigate each risk factor through the deployment of managerial, operational and techincal security controls
+
+Monitor
+-evaluate the effectiveness of risk response measures and identify changes that could affect risk management processes
+
+
+Risk identification
+-takes place by evaluating all the threats, identifying the vulnerabilities and assessing the probability or likelihood of an event affecting an asset or a process
+
+
+----
+
+Conducting an Assessment
+
+-Most business assets have specific value associated with them
+-in security terms, assets valued according to the cost created by their loss or dmg
+
+Business Continuity Loss
+-a loss that's associated with no longer being able to fulfill contracts or orders due to the breakdown of critical systems
+
+Legal Costs
+- a loss created by organizational liability due to prosecution, (criminal law), or damages (civil law)
+
+Reputational Harm
+- loss created by negative PR and loss of market position or consumer trust
+
+System Assessments
+-better posture to reduce risk and prevent losses
+-he systematic identification of critical systems by compiling an inventory of the business processes and the tangible and intangible assets and resources that support those processes
+-people
+-tangible assets, things you can "touch"
+-intangible assets, "ideas" you cant "touch"
+-procedures, supllychains etc
+
+-MEF (Mission Essential Function)
+	-business or org activity that is too critical to be down
+
+-Asset/Inventory Tracking
+	-use of sw/hw solution to track and manage any assets within an org
+	-asset management database: contains type,model,srnumber, assetID, location, user,value etc. info
+ 
+threat and vulnerability assessment
+- an ongoing process of assessing assets against a known set of threats and vulnerabilities
+
+
+
+----
+
+Risk Calculation
+
+Risk = Probability x Magnitude
+
+Quantitative Method
+-"math", calculations
+-risk analysis method based on assigning concrete values to factors
+-probability expressed as %, magnitude as monetary value
+-AV x EF = SLE | (Asset Value, Exposure Factor, Single Loss Expectancy)
+	- SLE when calculating something happening ONCE
+-Annual Loss Expectancy (ALE)
+	-cost of a given risk on annual basis based on SLE
+	- SLE x ARO = ALE
+		- ARO (Annual Rate of Occurrence)
+
+Qualitative Method
+-uses opinions and reasoning to measure likelihood and impact of risk
+-used more in real world
+-"traffic light" systems (red,yellow,green)
+
+Semi-Quantitave Method
+-hybrid model
+-uses mixture of concrete values with opinions/reasoning
+
+----
+
+Business Impact Analysis
+
+BIA
+-systematic activity that identifies org risks and determines their effect on ongoing, mission critical operations
+-governed by metrics that express sytem availability
+
+-MTD - Maximum Tolerable Downtime
+	-longest period business can be inoperable without causing irrevocable business failure
+	-each business process can have own MTD
+	-upper limit on the rec time that need to resume operations
+
+-RTO - Recovery Time Objective
+	-length of time it takes after an event to resume normal business ops and activities
+
+-WRT - Work Recovery Time
+	-time in addition to RTO of individual systems to perform reintegration and testing of a restored or upgraded system following an event
+
+-RPO - Recovery Point Objective
+	-longest period of time that org can tolerate lost data being unrecoverable
+	-how long can you be without your data
+
+- MDT and RPO help to determine which business functions are critical and to specify appropriate risk countermeasures
+
+
+----
+
+Risk Prioritization
+
+Appetite
+-how much risk is your org willing to accept
+
+Mitigation
+-response that reduces a risk to fit orgs appetite
+-deterrence/reduction refers to controls that can make incident less likely or less costly
+-"controls"
+
+Avoidance
+-response that involves ceasing an activity that presents risk
+-not often valid solution since you can't avoid all risks
+-"Changing plans"
+
+Transference
+-involves moving or sharing the responsibility of risk to another entity
+-"insurance"
+-outsource service (web server provider)
+-can transfer costs of a risk but not reputational dmg to your org
+
+Acceptance
+-involves determining that risk is within orgs appetite and no countermeasures other than ongoing monitoring will be needed
+-"low risk"
+
+
+Security Control Prioritization
+-control is required by framework, best practice or regulation
+	-higher priority if required
+-cost of control
+-amount of risk a control mitigates
+
+Return of Security Investment (ROSI)
+-metric to calculate if sec control worth the cost
+- ((ALE - ALE^m)-C) / C = ROSI
+
+Risk is not always in oppositiong to orgs goals
+
+Engineering Tradeoff
+-an assessment of the benefit of the risk reduction against the increased complexity or cost in a system designer specification
+
+
+----
+
+Communicating Risk
+
+-Explain risk in simple language
+
+-Risk Register
+	-a document that highlights the results of risk assessments in easily comprehensible format
+		-impact/likelihood ratings
+		-date of identification
+		-description
+		-countermeasures/controls
+		-risk owner
+		-status
+	-should be shared between stakeholders
+
+-Compensating Controls
+	-substitute for a principal control
+	-provides same (or better) level of protection but uses different methodology or technology
+
+-Exception Management
+	-formal process used to document each case where function/asset is noncompliant with written policy and procedural controls
+		-business process and asset affected
+		-personnel involved
+		-reason for exception
+		-risk assessment
+		-compensating controls utilized
+		-duration of the exception
+		-steps needed to achieve compliance
+	-if certain policy/procedure generating lot of exception requests, reconsider the policy or redesign it
+
+----
+
+Training and Exercises
+
+-TTX - Tabletop Exercise
+	-uses incident scenario against a framework of controls or a red team
+	-discussion of simulated emergency situations and sec incidents
+- Penetration Test
+	- a test that uses active tools and security utilities to evaluate security by simulating an attack on a system to verify that a threat really does exist. They actively test that threat and vulnerability, they bypass security controls, and then finally, exploit those vulnerabilities on a given system
+	- interview personnel, to see how prone to social engineering
+	- need to be scoped and resourced
+	- White Team: staff admin, evaluating, supervising a pentest or incident response exercise. "Referees".
+
+
+Enterprise Security Architecture - ESA
+
+-Framework for defining the baseline, goals and methods used to secure a business
+-Framework-based governance seeks to mitigate the risks that are assocoiated with IT service delivery
+-Can provide
+	-policies, checklists, activities, tehcnologies
+
+-frameworks are there to help provide an externally verifiable statement of regulatory compliance
+
+-ITIL, COBIT, TOGAF, ISO 20000
+
+
+----
+
+Prescriptive Frameworks
+
+-framework that stipulates control selection and deployment
+-"mandatory", usually driven by regulatory compliance (HIPAA)
+
+Maturity Model
+-a component of an enterprise security architecture framework that's used to assess the formality and optimization of security control selection and usage and it addresses any gaps that you may have
+- initial > managed > defined > quantitatively managed > optimizing
+- review org against expected goals and determine the level of risk the org is exposed to based on it
+
+-can be difficult with continually evolving threat landscape
+
+----
+
+Risk-based Frameworks
+
+-framework that uses risk assessment to prioritize sec control selection and investment
+-can allow orgs to develop own way of doing things while minimizing risk
+
+-NIST Cybersecurity Framework
+	-risk based, focus on IT security over IT service provision
+	-Framework core
+		-identify, protect, detect,respond,recover
+	-Implementation tiers
+		-assess how closely those core functions, those five areas, are integrated into the organization's overall risk management process. And for each of those tiers, they're going to be categorized as partial, risk informed, repeatable, or adaptive
+	-Framework profile
+		-used to supply statements of current cybersecurity outcomes and target cybersecurity outcomes to identify investments that will be the most productive in closing the gap in cybersecurity capabilities shown by the comparison of the current and the target profiles
+-risk-informed model
+
+----
+
+Audits and Assessments
+
+-QC - Quality Control
+	-process determining if system is free from defects/deficiencies
+- QA - Quality Assurance
+	-analyze what constitures quality and how to measure/check it
+- QC and QA take form of V&V Verification and Validation withing sw development
+- Verification, a compliance testing process to ensure that the security system meets the requirements of a framework or regulatory environment or that a product or system meets its design goals
+- Validation, determining if sec system is fit for purpose
+- fit for purpose, in ITIL known as utility, meets the designed needs of the sw or service
+
+Assessments and Evaluations (checklist vs opinion)
+-Assessment, he process of testing the subject against a checklist of requirements in a highly structured way for measurement against an absolute standard
+-Evaluation, a less methodical process that's used for testing that is aimed at examining the outcomes or providing usefulness of a subject being tested
+	-evaluation is much more likely to use comparative measurements and is more likely to depend on the judgment of the evaluator, than on a checklist or a framework
+
+Audit
+- more rigid than A or E, auditor compares the org against predefined baseline to identify areas that require remediation
+- generally req in regulated industries
+
+Scheduled Review
+-similar to lessons learned review, occurs regular interval
+-should consider major incidents, trends and analysis, changes and additions, and progress made during previous period
+
+Continual Improvement
+-process of making small, incremental gains to products and services by identifying defects and inefficiencies for further refinement
+
+----
+
+Continuous Monitoring
+
+-the technique of constantly evaluating an environment for changes. That way, new risks can be more quickly detected and business operations can be improved upon
+-an ongoing effort to obtain information that is vital in managing risk within your organization
+	- situational awareness
+	- routine audits
+	- realtime analysis
+-can help to transform from reactive process to proactive
+-complex and time-consuming
+
+- CMD - Continuous Diagnostics and Mitigation
+	-provide us government agencies and departments, with capabilities and tools to identify cyber security risks on an ongoing basis, prioritize these risks based on the potential impacts and enable cyber security personnel to mitigate the most significant problems first
+
+
+
+Enterprise Security Architecture - ESA
+
+-Framework for defining the baseline, goals and methods used to secure a business
+-Framework-based governance seeks to mitigate the risks that are assocoiated with IT service delivery
+-Can provide
+	-policies, checklists, activities, tehcnologies
+
+-frameworks are there to help provide an externally verifiable statement of regulatory compliance
+
+-ITIL, COBIT, TOGAF, ISO 20000
+
+
+----
+
+Prescriptive Frameworks
+
+-framework that stipulates control selection and deployment
+-"mandatory", usually driven by regulatory compliance (HIPAA)
+
+Maturity Model
+-a component of an enterprise security architecture framework that's used to assess the formality and optimization of security control selection and usage and it addresses any gaps that you may have
+- initial > managed > defined > quantitatively managed > optimizing
+- review org against expected goals and determine the level of risk the org is exposed to based on it
+
+-can be difficult with continually evolving threat landscape
+
+----
+
+Risk-based Frameworks
+
+-framework that uses risk assessment to prioritize sec control selection and investment
+-can allow orgs to develop own way of doing things while minimizing risk
+
+-NIST Cybersecurity Framework
+	-risk based, focus on IT security over IT service provision
+	-Framework core
+		-identify, protect, detect,respond,recover
+	-Implementation tiers
+		-assess how closely those core functions, those five areas, are integrated into the organization's overall risk management process. And for each of those tiers, they're going to be categorized as partial, risk informed, repeatable, or adaptive
+	-Framework profile
+		-used to supply statements of current cybersecurity outcomes and target cybersecurity outcomes to identify investments that will be the most productive in closing the gap in cybersecurity capabilities shown by the comparison of the current and the target profiles
+-risk-informed model
+
+----
+
+Audits and Assessments
+
+-QC - Quality Control
+	-process determining if system is free from defects/deficiencies
+- QA - Quality Assurance
+	-analyze what constitures quality and how to measure/check it
+- QC and QA take form of V&V Verification and Validation withing sw development
+- Verification, a compliance testing process to ensure that the security system meets the requirements of a framework or regulatory environment or that a product or system meets its design goals
+- Validation, determining if sec system is fit for purpose
+- fit for purpose, in ITIL known as utility, meets the designed needs of the sw or service
+
+Assessments and Evaluations (checklist vs opinion)
+-Assessment, he process of testing the subject against a checklist of requirements in a highly structured way for measurement against an absolute standard
+-Evaluation, a less methodical process that's used for testing that is aimed at examining the outcomes or providing usefulness of a subject being tested
+	-evaluation is much more likely to use comparative measurements and is more likely to depend on the judgment of the evaluator, than on a checklist or a framework
+
+Audit
+- more rigid than A or E, auditor compares the org against predefined baseline to identify areas that require remediation
+- generally req in regulated industries
+
+Scheduled Review
+-similar to lessons learned review, occurs regular interval
+-should consider major incidents, trends and analysis, changes and additions, and progress made during previous period
+
+Continual Improvement
+-process of making small, incremental gains to products and services by identifying defects and inefficiencies for further refinement
+
+----
+
+Continuous Monitoring
+
+-the technique of constantly evaluating an environment for changes. That way, new risks can be more quickly detected and business operations can be improved upon
+-an ongoing effort to obtain information that is vital in managing risk within your organization
+	- situational awareness
+	- routine audits
+	- realtime analysis
+-can help to transform from reactive process to proactive
+-complex and time-consuming
+
+- CMD - Continuous Diagnostics and Mitigation
+	-provide us government agencies and departments, with capabilities and tools to identify cyber security risks on an ongoing basis, prioritize these risks based on the potential impacts and enable cyber security personnel to mitigate the most significant problems first
+
+
+
+
+
+
+
+
