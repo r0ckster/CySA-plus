@@ -1,0 +1,1413 @@
+Data Classification
+
+Data Governance
+-the process of managing information over its life cycle from creation to destruction
+
+Creation > Storage > Distribution > Retention/Destruction
+
+Data Classification
+-the process of applying confidentiality and privacy labels to that information
+
+
+Unclassified
+-no restrictions on viewing that data, it presents no risk to our organization if the information is disclosed to the public at large
+
+Classified
+-viewing that is restricted to authorized persons within the owner's organization or third parties under a nondisclosure agreement
+
+Confidential
+-highly sensitive data that is for viewing only by approved persons within the organization, and possibly those who are trusted under an NDA
+-lowest tier of classified data
+
+Secret
+-info that is valuable, and therefore it has to be protected by severely restricting its viewing
+
+Top Secret
+-highest grade
+-info that would cause grave danger if inadvertently disclosed
+
+
+Orgs often use simpler classification scheme like:
+-public, private/internal, restricted
+
+Classification may be applied manually or automatically to data
+
+
+Declassification
+-downgrading of a classification label over time, due to the information no longer requiring the additional security protections provided by that classification
+
+
+----
+
+Data types
+
+-Data can also be tagged not just by its classification, but also by its data type
+
+Data type
+-a tag or a label to identify a piece of data under a subcategory of a classification
+
+-PII, SPI, PHI, Financial Info...
+
+Microsoft's DLP solution, they have over 70 sensitive information types, underneath the unclassified classification category
+
+
+Data Format
+-organization of the information into preset structures or specifications
+	-Structured Data
+		-CSV file...
+	-Unstructured Data
+		-powerpoint slide, chat log...
+
+Data State
+-location of data within a processing system
+	-Data at rest
+	-Data in motion
+	-Data in use
+
+----
+
+Legal Requirements
+
+-any type of information or asset needs to consider how a compromise of that information can threaten the three core security attributes of the CIA triad
+
+Privacy vs Security
+-sec controls focus on CIA attributes of the processing system
+-privacy
+	- a data governance requirement that arises when you're collecting and processing personal data to ensure the rights of the subject's data
+
+-legal requirements that will affect your corporate governance and policies in regards to privacy of your users' data
+
+
+GDPR - General Data Protection Regulation
+-personal data can not be collected, processed or retained without the individual's informed consent
+-also provides the right for a user to withdraw consent, to inspect, amend or erase data held about them
+-req notification of data breach within 72 hours
+
+
+SOX - Sarbanes-Oxley Act
+-ets forth the requirements for storage and retention of documents that are relating to an organization's financial and business operations, including the type of documents to be stored and the retention periods
+
+
+GLBA - Gramm-Leach-Bliley Act
+-sets forth requirements that will help protect the privacy of an individual's financial information, that's held by financial institutions and others
+
+
+FISMA - Federal Information Security Management Act
+-sets forth the requirements for federal organizations to adopt information assurance controls
+
+
+HIPAA - Health Insurance Portability and Accountability ACt
+-sets forth the requirements to help protect the privacy of individuals' health information that's held by healthcare providers, hospitals, and insurance companies
+
+
+COSO - Committee of Sponsoring Organizations of the Treadway Commission
+- provides guidance on a variety of governance-related topics, including fraud, controls, finance and ethics and it relies on COSOs ERM integrated framework, which is Enterprise Risk Management framework
+
+
+----
+
+Data Policies
+
+Purpose Limitation
+-the principle that personal information can be collected and processed only for a stated purpose to which the subject has consented
+-a purpose limitation will restrict your ability to transfer data to third parties
+
+Data Minimization
+-the principle that only necessary and sufficient personal information can be collected and processed for the stated purpose
+-each process that uses personal data should be documented
+-affects the data retention policy
+
+Data Sovereignty
+-the principle that countries and states may impose individual requirements on data collected or being stored within their jurisdiction
+-some states/nations may respect data privacy more or less than others
+
+
+----
+
+Data Retention
+
+-a set of policies, procedures, and tools for managing the storage of persistent data
+-orgs may have legal requirements that bind us to retain certain types of data for a specified period of time to meet compliance and e-discovery requirements
+-the process that an organization uses to maintain the existence of and control of certain data in order to comply with business policies, and/or applicable laws and regulations
+-always include your legal counsel when you're developing these data retention policies
+
+Data Preservation
+-refers to information that's kept for a specific purpose outside of an organization's data retention policy 
+
+-backup and archiving tools used to fulfil the req of data retention
+
+Shor-term retention
+-how often the youngest media sets are overwritten
+-"online" data
+
+Long-term retention
+-any data moved to archive storage to prevent being overwritten
+
+
+-Business continuity should define your recovery point objective (RPO) and that should drive the recovery windows and backup plans
+
+-Retention policy is based on either redundancy or a recovery window
+
+-data has to be securely disposed, once you reach the end of that retention period, once it expires
+
+
+----
+
+Data Ownership
+
+-the process of identifying the person responsible for the confidentiality, integrity, availability, and privacy of the information assets
+
+Data Owner
+-a senior executive role, and they have the ultimate responsibility for maintaining the confidentiality, integrity, and availability of the information asset
+-data owner is going to be responsible for labeling the asset and ensuring that it's protected with appropriate controls
+
+Data Steward
+-a role that's focused on the quality of the data and the associated metadata
+-works for Data Owner
+
+Data Custodian
+-a role that's responsible for handling the management of the system on which the data assets are stored
+-"sysadmin"
+
+Privacy Officer
+-a role that's responsible for the oversight of any kind of privacy-related data managed by the company
+
+Who should own the data?
+-not IT
+-people who know the data
+
+
+----
+
+Data Sharing
+
+-you can outsource a service or an activity, but you can't outsource the legal responsibility for it
+
+SLA - Service Level Agreement
+-a contractual agreement setting out the detailed terms under which a service is being provided
+
+ISA - Interconnection Security Agreement
+- an agreement used by federal agencies, to set out security risk awareness processes, and commit the agency and suppliers to implementing security controls
+
+NDA - Non-Disclosure Agreement
+-a contract that sets forth the legal basis for protecting information assets between two parties
+
+Data Sharing and Use Agreement
+-an agreement that sets forth the terms under which personal data can be shared or used
+
+
+-data sets may be subject to pseudonymization, or deidentification, to remove personal data 
+
+
+
+
+Access Controls
+
+AC model can be applied to any type of data/sw resource
+-file system sec
+-network sec
+-db sec
+
+-each record in ACL is called Access Control Entry (ACE)
+	-ntfs, ext3/ext4, zfs
+	-db sec allows more fine-grained permission config
+
+-storage locations should consider data sovereignty issues
+-employees may need access from multiple geo-locations
+
+----
+
+File System Permissions
+
+-Incorrect permissions allocated to a resource can cause a data breach
+
+Windows
+
+icacls
+-a cli tool for showing and modifying file permissions
+- N - noaccess
+- F full access
+- R read only
+- RX read and execute
+- M modify
+- W write
+- D delete
+
+-a comma-seperated lis of permission is used for complex permissions
+
+
+Linux
+
+-everything is treated as a file within Linux
+
+-r read
+	-the ability to access and view the contents of a file or list the contents of a directory
+
+-w write
+	-ability to save changes to file, create, rename and delete files in a directory (deleting req execute)
+
+-x execute
+	-the ability to run a script, a program, or other software file, or it's the ability to access a directory, execute a file from that directory, or perform a task on that directory
+
+Owner Permission
+-these are the permissions that determine what the file owner can do with that file
+
+Group Permissions
+-These permissions determine what members of the files group who are not the owner can actually do with that file
+
+World or Other Permissions
+-permissions that determine what users who are not the files owner or members of the group can do with that file
+
+
+chmod
+-linux command that is used to modify file permissions
+
+chown
+-linux command that is used to modify the owner of a file
+
+
+----
+
+Encryption
+
+-encryption is a form of risk mitigation for access controls
+
+Data at rest
+-inactive data that is stored physically in any digital form
+-protected by whole disk encr, db encr, file encr, or folder encr
+
+Data in transit / Data in motion
+-data that is actively being transmitted over network
+-protected by transport encryption protocols like IPSec, TLS and WPA2
+
+Data in use
+-the active data which is stored in a non-persistent digital state, typically in a computer's random access memory, the RAM, or the CPU caches or the CPU registers
+-protected by secure processing mechanisms
+
+
+----
+
+DLP
+
+-a software solution that detects and prevents sensitive information from being stored on unauthorized systems or being transmitted over unauthorized networks
+
+-Policy Server
+-Endpoint agents
+-Network agents
+
+-DLP agents can scan both structured (Json, CSV) and unstructured (email...) formats
+-the transfer of content can be blocked if it does not conform to a predefined policy
+-DLP systems act when policy violation is detected
+	-alert only
+	-block
+	-quarantine
+	-tombstone (original file quarantined and replaced with different file)
+-DLP remediation can occur using client-side or server-side mechanisms
+
+
+----
+
+DLP Discovery and Classification
+
+-DLP defines data that should be protected using six methods
+
+-classification
+	-a rule based on confidentiality tags or labels that was attached to the data
+-dictionary
+	-a set of patterns that should be matched
+-policy template
+	-contains dictionaries optimized for data points in a regulatory or legislative schema
+-EDM (Exact Data Match)
+	-structured database of string values to match
+	-"hash match"
+-document matching
+	-entire or partial document based on hashes
+-statistical/lexicon
+	-a further refinement of partial document matching, which uses machine learning to also analyze a range of data sources
+
+----
+
+Deidentification Controls
+
+-methods and technologies that remove identifying information from data before we distribute that data
+-Oftentimes, your deidentification is going to be implemented as part of your database design
+
+Data Masking
+-a deidentification method is used, where a generic or placeholder label is substituted in for real data, while preserving the structure or format of the original data
+
+Tokenization
+-a deidentification method where a unique token is substituted in for real data
+-can be possibly reversable, warning
+
+Aggregation/Banding
+-deidentify people by gathering the data and generalizing it to protect the individuals involved
+
+Reidentification
+- an attack that combines deidentified data sets, and with other data sources things that you know to discover how secure the deidentification method is
+
+
+---
+
+DRM and Watermarking
+
+Digital Rights Management (DRM)
+-copyright protection technologies for digital media, which attempts to mitigate the risk of unauthorized copies being distributed
+-can be implemented using HW or SW approaches
+	-PS game only playable on PS
+	-pdf viewable only on certain software
+
+Watermarking
+-method and technology that applies a unique anti-tamper signature or message to a copy of a document
+
+Forensic Watermark
+-a digital watermark that can defeat attempts at removal, by cropping pages or images in the file
+
+
+
+
+
+
+SDLC Integration
+
+SDLC - Software Development Life Cycle
+-the process of planning, analysis, design, implementation and maintenance that govern software and systems development
+-important to integrate sec controls into each stage of the SDLC
+
+Waterfall Method
+-a software development model, where the phases of the SDLC cascade downward so that each phase will start only when all of the tasks identified in the previous phase were already completed
+-traditional method
+
+Agile Method
+-a software development model that focuses on iterative and incremental development to account for evolving requirements and expectations
+
+
+security targeted frameworks, can incorporate threat  and vulnerability and risk-related controls into the software development lifecycle
+
+SDL - Security Development Life Cycle
+-Microsoft security framework for application development that supports dynamic development processes
+
+OWASP Software Security Assurance Process
+-open web application security project security framework for secure application develpoment
+
+>Planning
+>Requirements
+>Design
+>Implementation
+>Testing
+>Deployment
+>Maintenance
+
+Black Box Testing / Blind Testing
+-no info about the target
+
+White Box Testing / Full Disclosure Testing
+-all info about the target
+
+Gray Box Testing
+-partial info about the target
+
+
+Secure Coding Best Practices
+-standards that define rules/guidelines for developing secure software systems
+-OWASP (open web application security project)
+	-charity/community that publishes a number of secure application development resources
+-SANS (SysAdmin, Network and  Security Institute)
+	-org specializing in sec and sec web app development training and sponsors the GIAG (Global Information Assurance Certification)
+
+
+----
+
+Execution and Escalation
+
+-attacks against software code, usually these attacks are going to attempt to execute some kind of attackers code within your system
+
+Arbitrary Code Execution
+-a vulnerability that allows an attacker to run their own code or a module that exploits such a vulnerability
+
+Remote Code Execution
+-a vulnerability that allows an attacker to transmit code from a remote host for execution on a target host or a module that exploits such a vulnerability
+
+Privilege Escalation
+-occurs when a user accesses or modifies specific resources that they are not entitled to normally access
+-attempt to gain administrator or root-level permissions
+	-vertical priv esc: normal user to higher level
+	-horizontal priv esc: staying at the same level
+
+Rootkit
+-a class of malware that modify system files (often at the kernel level) to conceal its presence
+	-kernel mode
+		-able to gain complete control of the system (ring 0)
+	-user mode
+		-might have admin rights but uses OS features for persistence
+
+
+----
+
+Overflow Attacks
+
+Buffer Overflow
+-an attack in which data goes to the boundary of the destination buffer, and then it begins to corrupt the adjacent memory and essentially it overflows
+
+Buffer: temporary storage area that a program is going to use to store data
+
+-Over 85% od data breaches were caused by a buffer overflow
+
+Stack
+-reserved are of memory where the program saves the return address when a function call instruction is received
+
+"Smash the Stack"
+-occurs when an attacker fills up the buffer with NOPS so that the return address may hit an up and continue on until it finds the attacker's code to run
+
+
+
+Heap Overflow
+-a software vulnerability where input is allowed to overwrite memory locations within the area of a processor's memory allocation user to store dynamically-sized variables
+-can overwrite those variables and possibly allow arbitrary code execution
+
+
+
+Integer Overflow
+-n attack in which a computer result is too large to fit in its assigned storage space, which can occur to crashing or data corruption, and it could trigger a buffer overflow
+
+
+
+How to protect against these?
+-pick right programming language
+-strcpy in C/C++ does not check perfrom boundary checking of buffers
+-Java or Python or PHP, these can actually detect these overflow conditions and they can halt the program execution
+
+
+ASLR -Address Space Layout Randomization
+-a technique that randomizes where the components in our running application are placed in memory
+-protects from buffer overflow attacks
+
+-Run programs with the least privilege to prevent overflow attacks
+
+
+----
+
+Race Conditions
+
+-a software vulnerability that occurs when the resulting outcome from execution processes is directly dependent on the order and timing of certain events and those events fail to execute in the order and timing intended by the developer
+
+- a race condition vulnerability, this is found when there are multiple threads attempting to write a variable or object at the same memory location at the same time
+
+Dereferencing
+-a software vulnerability that occurs when the code attempts to remove the relationship between a pointer and the thing that that pointer is pointing to in memory
+
+-race conditions difficult to detect and mitigate
+-can also be used against DBs and file systems
+
+TOCTTOU - Time of Check to Time of Use
+-a potential vulnerability that occurs when there's a change between when the app checked a resource and when the app actually is going to use the resource
+
+
+How to prevent race conditions and TOCTTOU?
+1.develop apps to not process things sequentially if possible
+2.implement locking mechanisms to provide app with exclusive access
+
+
+----
+
+Improper Error Handling
+
+-errors could be caused by invalid user input, a loss of network connectivity, or another server or process failing
+
+Error Handler
+-coding method that's being used to anticipate and deal with exceptions that are thrown during the execution of a process
+-error handling can prevent the application from failing in a way that allows the attacker to execute code or perform some sort of injection attack
+
+-Default error messages could leak sensitive information
+-use custom error handlers to prevent accidental leakage
+
+
+----
+
+Design Vulnerabilities
+
+-vulnerabilities often arise from the general design of your software code
+
+Insecure Components
+-any code that's used or invoked outside of the main program development process
+-code reuse, 3rd party Library, SDK (software development kit)
+
+Insufficient Logging and Monitoring
+-any program that does not properly record or log detailed enough information for an analyst to perform their job when there's an incident that happens
+-logging and monitoring must support your use case and answer who, what, when, where and how
+
+Weak of Default Configurations
+-any program that uses ineffective credentials or configurations or one in which the defaults have not been changed for security
+-many app choose to simply run as root or as local admin
+-permissions may be too permissive on files/directories due to weak configs
+
+Best Practice
+-utilize scripted installations and baseline config templates to secure applications during installation
+
+
+----
+
+Platform Best Practices
+
+Client/Server Applications
+-an application where part of the application is client software that's installed and run on a separate piece of hardware, and then you have a server application that's installed on a server, and they're going to interact between the two over a network
+-attack can be directed at local client code, server app, or at the network channel between
+-server-side code should always utilize input validation
+
+Web Applications
+-any applications which use a generic web browser as the client and it uses a standard network protocols like HTTP or HTTPS to communicate with the server
+-web applications can use a multi-tiered architecture where the server part is split between application logic and then data storage and retrieval
+-modern web apps also use microservices and serverless designs
+
+Mobile Applications
+-any application that's deployed and run on a smartphone, a tablet, or other mobile operating system
+-often more susceptible to the unsecure use of authentication, authorization and confidentiality controls
+
+Embedded Applications
+-any applications which are designed to run on dedicated hardware platforms
+-ICS, SCADA, smart TV..
+-traditionally are not focused on security during development deployment
+
+Firmware
+-generally considered a type of embedded application that contains the block of embedded code that's run at first startup, things like your bios if you want to think of that. This also performs low level input/output device functions, plus bootstrapping of an operating system or application
+-firmware has complete control over HW and system memory, thereby making it a lucrative target
+
+SoC - System-on-Chip
+-a type of embedded application commonly used in mobile devices, which contains integrated CPUs, memory, graphics, audio, network, storage controllers, and software, all on one chip
+-SoC manufacturers will often reuse code by selecting what's known as an IP block for certain functions and they make these using field programmable gate arrays (FPGAs)
+
+
+
+
+
+Directory Traversal
+
+-a directory traversal is a type of injection attack and any kind of injection attack really focuses on the ability for the attacker to insert malicious code through an application interface
+
+-injection attacks occur when the attacker inserts malicious code through an application interface
+
+-directory traversals can be used to access any file on a system if they have the right permissions
+
+- "../../../etc/shadow" common way to see directory traversal attack
+-Attackers can use encoding to hide their directory traversal attempts
+	-"%2e%2e%2f" this would be ../
+
+File Inclusion
+-a web application vulnerability is being exploited, that allows an attacker to either download a file from an arbitrary location on the host file system, by using that directory traversal, or upload an executable or script file to open a back door
+
+-remote file inclusion
+	-occurs when an attacker tries to execute a script to inject a remote file into the web app or the website
+	-"https://diontraining.com/login.php?user=http://malware.bad/malicious.php"
+
+-local file inclusion
+	-an attacker tries to add a file to the web app or website that already exists on the hosting server
+	-"https://diontraining.com/login.php?user=../../Windows/system32/cmd.exe%00"
+
+
+To prevent directory traversals and file inclusion attacks, use proper input validation
+
+
+----
+
+Cross-Site Scripting
+
+Also known as XSS
+-a malicious script that's hosted on the attacker's site or coded in a link that's injected onto a trusted site designed to compromise clients that are browsing that trusted site, thereby circumventing the browser's security model of trusted zones
+-powerful input validation exploit
+
+1.attacker id input validation vuln within a trusted website
+2.attacker crafts a URL to perform code injection against the trusted website
+3.the trusted site returns a page containing the malicious code injected
+4.malicious code runs inte the clients browser with permission level as the trusted site
+
+-XXS braks the browsers sec model since browsers assume scripting is safe
+
+https://www.diontraining.com/search?q=<script%20type='application/javascript'alert('xss');</script>
+-this is a reflected or non-persistent XSS attack
+
+Persisten XSS
+-attack that inserts code into a back-end database used by trusted site
+
+-these attacks occur as what are known as server-side scripting attacks
+
+
+DOM XSS - Document Object Model 
+-an attack that exploits the client's web browser using client-side scripts to modify the content and layout of the web page
+
+https://diontraining.com/index.html#default=<script>alert(document.cookie)</script>
+
+-DOM XSS attacks run with the logged in users privileges of the local system
+
+To prevent XSS attacks, use proper input validation
+
+
+----
+
+SQL Injection
+
+-SQL is the "structured query language" and it's used to select, insert, delete, or update data within a database
+-another form of injection attack
+-an attack that consists of the insertion or injection of an SQL query via input data from a client to a web application
+-attacker has to try every single input there is to include elements such as URL parameters, form fields, cookies, POST data, and HTTP headers to identify whether or not there's an SQL injection vulnerability
+
+-can be prevented with input validation and using least privilege when accessing a DB
+
+"' OR 1=1;" is and SQL injection
+
+
+Isecure Object Reference
+-coding vulnerability where unvalidated input is used to select a resource object, like a file or a database
+
+"https://bankofdion.com/account.php?acct=1234"
+
+-implement access control techniques ina pp to verify a user is authorized to access a specific object
+
+
+----
+
+XML Vulnerabilities
+
+-XML data submitted without encryption or input validation is vulnerable to spoofing, request forgery and injection of arbitrary code
+
+"</question>
+</xml>"
+
+XML Bomb (billion laughs attack)
+-XML encodes entities that expand to exponential sizes, consuming memory on the host and potentially crashing it
+
+XXE - XML External Entity
+-attack that embeds a request for a local resource
+"<...."file:////etc/shadow"...>"
+
+INPUT VALIDATION to counter it
+
+
+----
+
+Secure Coding
+
+Input Validation
+-any technique that you use to ensure the data entered into a field or a variable into an application is handled appropriately by that application
+-input validation can be conducted locally (on client) or remotely (on server)
+	-client-side more dangerous since it's vuln to malware interference
+	-server-side can be time/resource intensive
+-after passing client-side validation, should still undergo server-side validation
+-input should also be subjected to normalization or sanitization
+
+Normalization
+-a string is stripped of all the illegal character or substrings, and it's converted to an accepted character set
+
+Canonicalization Attack
+-attack method where input characters are encoded in such a way to evade vulnerable input validation measures
+-"reject ../ parts"
+
+
+Output Encoding
+-coding method that's used to sanitize the output by converting the untrusted input into essay form where the input is now displayed as data to the user without executing the code in the browser
+-Output encoding is used to mitigate against the code injection and cross-site scripting attacks that attempt to use input
+to run that script
+
+
+Parameterized Queries
+-technique that is used to defend against SQL injections and insecure object references by incorporating placeholders into an SQL query
+
+
+----
+
+Authentication Attacks
+
+Spoofing
+-a software based attack where the goal is to assume the identity of a user, a process, an address, or other unique identifier
+
+MITM
+-an attack where the attacker is going to sit between two communicating hosts and transparently captures, monitors and relays the communications between those hosts
+-MitB intercepts API calls between the browser process and its DLLs
+
+Password Spraying
+-brute force type of attack in which multiple user accounts are tested with a dictionary of common passwords
+
+-online password attack, entering guessing directly to a service
+-restrict number/rate of logon attempts to prevent
+
+
+Credential Stuffing
+-brute force attack in which stolen user account names
+and passwords are tested against multiple websites
+-prevented by not reusing pws
+
+Broken Authentication
+-sw vuln where the authentication mechanism allows an attacker to gain entry
+
+-weak pw credentials
+-weak pw reset methods
+-credential exposure
+-session hijacking
+
+
+----
+
+Session Hijacking
+
+-session management is a fundamental sec component in web app
+-enables web applications to uniquely identify a user across a number of different actions and requests while keeping the state of the data generated by that user and ensuring it's assigned to that user
+
+Cookie
+-a cookie is essentially just a text file. It's a text file that's used to store information about a user when they visit the website
+
+Session cookies are non-persistent, reside in memory and are deleted when browser instance is closed
+
+Persisten Cookie
+-cookies are stored in the browser cache until they're deleted by the user when you do the clearing your cookies or when they pass a defined expiration date
+
+Cookies should be encrypted if they store confidential info
+
+
+Session Hijacking
+-type of spoofing attack where the attacker disconnects a host then replaces it with his own machine, spoofing the original host's IP
+-can occur through the theft or modification of cookies
+
+Session Prediction Attacks
+-a type of spoofing attack where the attacker attempts to predict the session token to hijack that session
+-session token has to be generated using a non predictable algorithm, and it must not reveal any information about the session client
+
+XSRF/CSRF - Cross-Site Request Forgery
+-a malicious script that's being hosted on the attacker site that can then exploit a session started on another site within the same browser
+
+
+Request user-specific tokens in all form submissions to prevent CSRF
+
+
+Cookie Poisoning
+-modifies the contents of a cookie after it's been generated and sent by the web service to the client's browser so, that that newly modified cookie can then be used to exploit vulnerabilities in a web application
+
+
+----
+
+Sensitive Data Exposure
+
+-a software vulnerability occurs that allows the attacker to be able to circumvent access controls and retrieve confidential or sensitive data from a file system or a database
+-applications to only send data between authenticated hosts using cryptography and encryption to protect the session
+-DO NOT use hardcoded credentials
+-disable the use of client password auto-complete features, temporary files and cookies whenever possible
+	-secure: only on secure channel
+	-httpOnly
+	-domain
+	-Path
+	-Expires
+
+----
+
+Clickjacking
+
+-a type of hijacking account that forces a user to unintentionally click a link that's embedded in or hidden by other webpage elements
+-clickjacking is made possible because of the use of iframes within HTML
+-frame busting is a technique that removes the malicious iframe loaded on the site by forcing your page to the top frame
+-If you set your X-Frame-Options and set them to deny, this is actually a better strategy to protect against clickjacking
+
+
+----
+
+
+
+
+
+Software Assessments
+
+-a comprehensive testing program that validates the effectiveness of your protection of confidentiality, integrity, and availability within your software
+
+Static Code Analysis
+-the process of reviewing uncompiled source code either manually or using automated tools
+-automated tools can reveal issues ranging from faulty logic to insecure libraries before you even start running that application
+
+Code Review
+-process of peer review of uncompiled source code by other developers
+
+Formal Verification Method
+-a process of validating software design through mathematical modeling of expected inputs and outputs
+-used in critical software where corner cases have to be eliminated
+
+UAT - User Acceptance Testing
+-beta testing by your end users that proves a program is usable and fit for purpose in real world conditions
+
+Security Regression Testing
+-the process of checking that updates to code do not compromise the existing security functionality or capability of the code itself
+-is going to enable the identification of security mechanisms that have worked before, but are now broken after the latest changes
+
+
+----
+
+Reverse Engineering
+
+-the process of analyzing the structure of hardware or software to reveal more about how it functions
+
+Machine Code
+-software that has been assembled into binary instructions that are expressed as hexadecimal digits native to the processor platform
+
+Disassembler
+-can take that machine language and they can reverse engineer it to be able to convert it from machine language code into assembly language code
+
+Assembly code
+-a compiled software program that's converted to binary machine code using the instruction set of that CPU platform and it's represented in human readable text
+-typical instructions include int,push,mov,not, and,or,xor, add,sub,inc,dec,jmp,cmp and test
+
+Decompiler
+-a reverse engineering tool that converts that machine code or assembly language code to code in a specific higher level language or pseudocode
+
+High-level Code
+-easier for humans to read, write and understand
+
+
+Pseudocode
+-makes it easier to identify individual functions within the process, track the use of variables, and to find branching logic
+
+IDA is the Interactive Disassembler
+-a popular cross-platform disassembler and decompiler that's often used by reverse engineers
+
+-programmers if they want to make their code more difficult to analyze, they can do this by using an obfuscator
+
+-static analysis of disassembled code is far from perfect
+
+----
+
+Dynamic Analysis
+
+-the execution of a compiled program to analyze the way it executes and interacts with a system or network
+
+Debugger
+-dynamic testing tool used to analyze software as it executes
+-debugger is going to allow us to pause the execution and monitor or adjust the value of variables at different stages through its execution
+
+Stress Test
+-a software testing method that evaluates how software performs under extreme load
+-can be used to determine what could trigger a denial of service
+
+Fuzzing
+-a dynamic code analysis technique that involves sending a running application random and unusual input to evaluate how the application responds
+-a technique that's designed to test your software for various bugs and vulnerabilities
+1.app UI
+2.protocol
+3.file format
+-fuzzers may craft the input using semi-random input or specific inputs
+
+"Peach Fuzzer" if you want to test
+
+
+----
+
+Web Application Scanners
+
+-vulnerability testing tool and it's designed to identify issues with web servers and web applications
+-web application scanners are set up to detect cross-site scripting, SQL injection, and other types of web attacks
+
+Nikto
+-a vulnerability scanner that can be used to identify known web server vulnerabilities, misconfigurations, identify web applications running on a server and id potential known vulns in those web apps
+-cli tool
+
+Arachni
+-another open-source web scanner app
+-has GUI
+
+
+----
+
+Burp Suite
+
+-a proprietary interception proxy and web application assessment tool
+
+Interception Proxy
+-sw that sit between cliend and server (MITM), allows requests from the client and responses from the server to be analyzed and modified
+
+-allows for the automated scanning of vulnerabilities and crawling of an application to discover content while providing the tools for automating the modification of requests and insertion of exploits, all while being this intersection proxy
+
+-often used by penetration testers and security analysts to test the different web applications
+
+
+----
+
+OWASP ZAP (Zed Attack Proxy)
+
+-open-source interception proxy and web app assessment tool
+-written in Java
+-include crawlers to automate the discovery of links and content within a web application
+-Heads Up Display (or HUD mode)
+	-provides alert indications and scan tools within your browser when you go and open pages within a website
+
+
+
+
+
+Cloud Models
+
+Cloud Deployment Model
+-classifying the ownership and the management of the cloud as one of these categories, it's either public, private, community or hybrid
+-have various vulns and threats associated with them
+
+
+Public
+-service provider makes resources available to the end users over the internet
+-are deployed for shared use by multiple independent tenants
+-infrastructure, application code and the data that's being hosted within these private instances, but you have no ability to control the physical server
+-responsibilities:
+	-cloud service provider like Amazon, I have the responsibility for integrity and availability of the platform
+	-consumers manage confidentiality and authorization/authentication
+
+
+Private
+-a company creates its own cloud environment that only it can utilize as an internal enterprise resource
+-may be hosted internally or externally
+-private cloud should be chosen when you have security as your main concern and more important than cost
+-single tenant model
+-admin must consider data protection, compliance and patch management
+
+
+Community
+-resources and costs that are shared amongst several different organizations who have a common service need
+-deployed using what we call a shared use by cooperating tenants
+-are secure when the organizations involved have strong interoperability agreements
+
+
+Hybrid
+-combines public, private and community clouds as well as on-premise infrastructure to meet an orgs needs
+-challenges:
+	-greater complexity
+	-absence of data redundancy
+	-demonstrating compliance
+	-security management
+
+
+Multicloud
+-a cloud deployment where the cloud consumer is going to use multiple public cloud services
+-org can use AWS, Slack, Zoom, G-Suite, O365
+-using multiple cloud service providers does require additional due diligence and risk assessment effort
+
+
+----
+
+Service Models
+
+-classifying the provision of cloud services and the limit of the cloud service provider's responsibility as either software, platform, infrastructure, or some other thing
+
+
+SaaS Software as a Service (USE)
+-provide all the hardware, the operating systems, the software, the applications, everything you need for a complete application service to be delivered to your end user
+-Slack, QuickBooks etc.
+-cloud service providers responsible for the security of the platform and infrastructure
+-consumer responsible for app security, account provisioning and authorizations
+
+
+PaaS Platform as a Service (BUILD)
+-provides your organization with the hardware and the software needed for a specific service to operate
+-consider access control, load balancing, failover, privacy and protection of data when using PaaS
+-always encrypt data stored in a 3rd party PaaS
+
+
+IaaS Infrastructure as a Service (MOVE)
+-provide all the hardware, the operating system, and the backend software needed to develop software or services
+-place the responsibility on the consumer, me 
+for the security of the platform and the applications (OS and up)
+-cloud service providers are responsible for CIA of the hw in the resource pool
+-Organizational governance is req to control ho VMs and containers are provisioned and deprovisioned
+
+
+SECaaS Security as a Service
+-provides your organization with various types of security services without the need to maintain a cybersecurity staff
+-anti-malware solutions first SECaaS products
+
+
+----
+
+Cloud-based Infrastructure
+
+-must be config to provide same lvl of sec as local solution
+
+VPC Virtual Private Cloud
+-private network segment made available to single cloud consumer within a public cloud
+-not secure as private cloud but less expensive
+-as a consumer you're responsible for configuring the IP address space and routing within that cloud 
+-typically going to be used to provision internet-accessible customer-facing applications or corporate applications that need to be accessed from geographically remote sites
+
+-on-premise solutions maintain their servers locally within the network
+-many sec products offer cloud-based and on-premise versions
+
+-consider any compliance and regulatory limitations of storing data in a cloud-based sec solution
+
+
+----
+
+CASB
+
+Cloud Access Security Broker
+-enterprise management software designed to mediate access to cloud services by users across all types of devices
+-SSO, Malware and rogue device detection, monitor/ audit user activity, mitigate data exfiltration
+-provide visibility into how clients and other network nodes use cloud services
+
+Forward Proxy
+-security appliance or host that's positioned at the client network edge, and then it's going to forward the user traffic to the cloud network if the contents of that traffic comply with policy
+
+Reverse Proxy
+-an appliance that's positioned at the cloud network edge and directs the traffic to the cloud services if the contents of that traffic comply with the policy
+
+API Application Programming Interface
+-a method that uses the brokers connections between the cloud service and the cloud consumer to make changes
+-dependent on the API supporting the functions your policies demand
+
+
+
+
+
+SOA and Microservices
+
+-a software architecture where the components of the solution are conceived as loosely coupled services, not dependent on a single platform type or technology
+-each service is going to take defined inputs and produce defined outputs
+-services are defined within the scope of functional business requirements that are reused for diff purposes
+
+ESB - Enterprise Service Bus
+-a common component of SOA architectures that helps us facilitate this decoupled service-to-service communication
+
+-SOA is an overall design architecture for mapping the business workflows to the IT systems that support them
+
+
+Microservices
+-software architectures where the components of the solution are conceived as a highly decoupled service not dependent on a single platform type or technology
+-a microservice is a design paradigm applied to app development
+
+
+Diff between SOA and microservices?
+-SOA allows applications to be built from services with some interdependencies
+-microservices that are capable of being developed, tested, and deployed independently
+
+
+----
+
+SOAP - Simple Object Access Protocol
+
+-XML-based web service protocol that is used to exchange messages
+-SOA provides services with access from diff sources
+-SOAP is going to help us to support the authentication, transport security, asynchronous messaging, and built-in error handling
+-leverage WEb Services Security (WS-Sec) extensions to enforce integrity and  confidentiality via SOAP
+-web services using SOAP may be vuln to diff exploits
+	-probing
+		-a preliminary attack that's used to conduct reconnaissance or enumeration against a web service
+	-Coercive Parsing
+		-an attack that modifies requests to SOAP web services in order to cause the service to parse the XML-based request in a harmful way
+	-External references
+		-poorly config SOAP services can be exploited by 3rd party library call
+	-Malware
+			-insterted into XML msg that is used to compromise a service
+	-SQL injections
+		-avoid transmitting SQL statements over SOAP
+
+
+----
+
+SAML
+
+Security Assertions Markup Language
+-XML-based data format, and this one is one that's used to exchange authentication information between a client and a service
+-often used with SOAP
+-SAML often provides SSO and federated identity management
+-the signature here is going to be verified and a session is going to be established once that response is received by the service provider
+
+
+----
+
+REST
+
+Representational Sate Transfer (REST)
+-a software architectural style that defines a set of constraints to be used for creating web application services
+-REST or RESTful APIs is a looser architectural framework than SOAPs tightly specified protocol
+-supports HTTP, XML, CSV or JSON formatted messages
+
+OAuth
+-a delegated authorization framework for RESTful APIs that enables applications to obtain limited access, also known as scopes, to a user's data without giving away a user's password
+-OAuth comes in v1 (not commonly implemented) and v2
+-servers 4 types of parties:	
+-clients: apps that user wants to access/use
+-resource owners: end users being serviced
+-resource servers: servers provided by a service that user wants to access
+-authorization servers: servers owned by the identity provider (IdP)
+-OAuth2 is vuln to CSRF and open redirects
+-OAuth 2 is explicitly designed to authorize claims and it is not used to authenticate users
+
+OpenID Connect (OIDC)
+-an authentication protocol and it can be implemented as special types of OAuth flows with precisely defined token fields
+-OAuth for authorization, OpenID Connect for authentication
+
+
+Authorization
+-function of specifying access rights and privileges to certain resources
+
+Authentication
+-the process of verifying the identity of a person or device
+
+
+JWT - JSON Web Tokens
+-a token format that contains a header, a payload and a signature in the form of a JavaScript Object Notation message which is a JSON message
+-"think about OAuth"
+-authorization piece, not authentication
+
+
+----
+
+API
+
+Application Programming Interface
+-a library of programming utilities that are used to enable software developers to access functions of another application
+-APIs allow for the automated administration, management and monitoring of cloud services and others
+-"think about integration"
+
+curl
+-a tool to transfer data from one server to another, and you can do this using any supportive protocol (HTTP,HTTPS, FTP, FTPS, SCP, SFTP, TFTP, DICT, TELNET, LDAP, FILE)
+-with curl you can test API
+
+
+----
+
+Scripting
+
+Cloud Automation
+-the completion of cloud-related administrative tasks without human intervention
+-can occur over GUI, CLI or API
+
+-Scripting can be used to provision resources, add accounts, assign permissions and perform many other tasks including, backup, recovery and scaling
+-have to include
+	-parameters, logic statements, validation, error handling, unit testing
+-javascript, python, ruby, go and many other programming lang
+
+
+----
+
+Workflow Orchestration
+
+-the automation of multiple steps in a deployment process
+-Orchestration is the automation of automations
+-rapid elasticity in cloud computing would not be possible without orchestration
+
+Resource Orchestration
+-EC2 instances in AWS
+
+Workload Orchestration
+-managing apps
+
+Service Orchestration
+-working on services themselves
+
+
+3rd party orchestration platform is protection from vendor lock in
+
+-Chef, works with cookbooks
+-Puppet, like Chef but needs master server
+-Ansible, uses YAML
+-Docker
+-Kubernetes, manages dockers
+-GitHub
+
+
+----
+
+FAAS and Serverless
+
+FAAS=Function as a Service
+-a cloud service model that supports serverless software architecture by provisioning runtime containers in which code is executed in a particular programming language
+
+Serverless
+-a software architecture that runs functions within virtualized runtime containers in a cloud rather than on dedicated server instances
+-everything is developed as a function or microservice
+
+-eliminates the need to manage physical or virtual servers
+-no patching
+-no administration
+-no file system monitoring
+-underlying architecture is managed by the cloud service provider
+
+-ensure that the clients accessing the services have not been compromised
+
+-serverless depends on orchestration
+
+
+
+
+
+
+Cloud Threats
+
+Insecure API
+-must only be used over encrypted channel (HTTPS)
+-data received by API must pass service-side validation
+-error handling/messages (sanitized)
+-implement throttling/rate-limiting to protect from DoS
+
+Improper Key Management
+-APIs should use secure authentication and authorization like SAML or OAuth/OIDC before accessing data
+-do not hardcode or embed a key into the source code
+-delete unnecessary keys and regenerate keys when moving into a production environment
+-hardening policies in place, whitelists etc
+
+Insufficient Logging and Monitoring
+-SaaS may not supply access to log files or monitoring tools
+-logs must be copied to non-elastic storage for long-term retention
+
+Unprotected Storage
+-cloud storage containers are referred to as buckets (AWS) or blobs (Azure)
+-Access control to storage is administered through your container policies. It's also done through your IAM authorizations and it's done through object ACLs
+-incorrect permissions may occur due to default read/write permissions leftover from creation
+-incorrect origin settings may occur when using content delivery networks
+
+CORS Policy - Cross Origin Resource Sharing
+-a content delivery network policy that instructs the browser to treat requests from nominated domains as safe
+-weak CORS policies expose site to vulns like XSS
+
+
+----
+
+Cloud Tools
+
+-can be used to id VM sprawl and dormant VMs
+
+Dormant VM
+-a virtual machine that was created and configured for a particular purpose and then it was shut down or it was even left running without properly decommissioning it
+
+-tools that are available for vulnerability assessments and penetration testing of your cloud infrastructure
+
+ScoutSuite
+-an open-source tool written in Python that can be used to audit instances and policies created on multicloud platforms (AWS, Azure, GCP)
+
+Prowler
+-an auditing tool for AWS that's used to evaluate the cloud infrastructure against AWS benchmarks, GDPR compliance, and HIPAA compliance
+-only AWS
+
+Pacu
+-an open-source cloud penetration testing framework to test the security configuration of an AWS account
+
+
+-You must consult the cloud service providers acceptable use policy before scanning hosts and services
+
+
+----
+
+Cloud Forensics
+
+-attacker may use multicloud services to create their attack platform
+
+1.Forensics in a public cloud is complicated by the access permitted by the cloud providers SLA
+
+2.Instances are created and destroyed very quickly due to the elasticity making forensic recovery more difficult
+
+3.Issues with chain of custody since investigators must rely on cloud service providers to provide the data
+
+
+
+
+
+
+
+
+CI/CD
+
+-Old way: Dev > Test/integration > staging > production
+
+Continuous Integration
+-a software development method where code updates are tested and committed to a development or build server or code repository rapidly
+-test and commit updates multiple times per day
+-focused on detecting and resolving development conflicts early and often
+
+Continuous Delivery
+-a software development method where the application and platform requirements are frequently tested and validated for immediate availability
+-focused on automated testing of code in order to get it ready for release
+
+Continuous Development
+-a software development model where application and platform updates are committed to production rapidly
+
+
+----
+
+DevSecOps
+
+DevOps
+-an organizational culture shift that combine the software development and the systems operations people into one team
+-operations and developers can build, test and release sw faster and more reliably
+
+DevSecOps
+-a combination of software development, security operations, and systems operations by integrating with all those disciplines together in one team
+-utilizes a shift-left mindset
+-integrate sec from the beginning
+-test during and after development
+-automate compliance checks
+
+----
+
+IAC
+
+Infrasatructure as Code
+-a provisioning architecture in which the deployment of resources is performed by scripted automation and orchestration
+-allows for the use of scripted approaches to provisioning infrastructure in the cloud
+-robust orchestration can lower your overall IT costs, speed up your deployments, and you can increase security
+
+Snowflake Systems
+-any system that is diff in its config compared to standard template within an infrastructure as code architecture
+-lack of consistency leads to sec issues and inefficiencies in support
+
+Idempotence
+-a property of infrastructure as code that an automation or orchestration action is always going to produce the same result regardless of the component's previous state
+
+IaC uses carefully developed and tested scripts and orchestration runbooks to generate consistent builds
+
+
+----
+
+Machine Learning
+
+AI - Artificial Intelligence
+-the science of creating machines with the ability to develop problem solving and analysis strategies without significant human direction or intervention
+
+ML
+-a component of AI
+-enables machine to develop strategies for solving given task a labeled dataset where feaetures have been manually identified but without further explicit instructions
+-Machine learning is only as good as the datasets that are used to train it
+
+ANN - Artificial Network
+-an architecture of input, hidden, and output layers that can perform algorithmic analysis of a dataset to achieve outcome objectives
+-machine learning system can adjust its neural networks to reduce errors and optimize objectives
+
+Deep Learning
+-refinement of machine learning that enables a machine to develop strategies for solving a task, given a labeled dataset and without further explicit instructions
+-use complex classes of knowledge defined in relation to simpler classes of knowledge, to make more informed determinations about an environment
+
+
+-Machine Learning has human input, Deep Learning doesn't
+
+
+----
+
+Data Enrichment
+
+-a process of incorporating new updates and information to an organization's existing database to help improve its accuracy
+-ML can assist with data correlation
+-AI-based systems can help combine all of these indicators from multiple threat feeds to help reduce our false positives and our false negatives 
+-AI-based systems can really help us as we're trying to identify this malware that's been jumbled up and it can do it a lot better than our human counterparts
+-not really good when they're trying to identify things like administrative actions or intent
+-machine learning is only as good as the data sets that you use during training
+
+
+----
+
+SOAR
+
+Security Orchestration, Automation and Response
+-a class of security tools that helps facilitate incident response, threat hunting, and security configurations by orchestrating and automating runbooks and delivering data enrichment
+-primarily used for IR, but also for threat hunting
+-next-gen SIEM: SIEM with integrated SOAR
+
+-scan security/threat data
+-analyze it with ML
+-automate data enrichment
+-provision new resources
+
+Playbook
+-a checklist of actions that you're going to perform to detect and respond to a specific type of incident
+
+Runbook
+-an automated version of a playbook and it leaves clearly defined interaction points for human analysis
+
+
+
+
