@@ -1,5 +1,4 @@
-# CySA-plus
-CompTIA CySA+ (CS0-002)
+# CySA+ (CS0-002)
 
 Note dump.
 
