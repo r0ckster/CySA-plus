@@ -1,0 +1,1016 @@
+Identifying Vulnerabilities
+
+-id vuln is important so they can be mitigated
+
+Vuln Assessment
+- an evaluation of the system security and our ability to meet compliance requirements based on the configuration state of the system, as represented by the information collected from the system
+
+1.collect set of target attributes
+2.analyze the diff in current vs baseline configs
+3.report the results
+
+
+----
+
+Scanning Workflow
+
+Qs:
+-who will conduct the scan
+-when will scan be performed
+-which systems will be scanned
+-how will scanning impact the systems
+-does system need to be isolated during scanning
+-who can assist with the scanning
+
+Example:
+1.install sw and patches to establish baselined system
+2.perform initial scan of target system
+3.analyze assessment report based on the baseline
+4.perform corrective actions based on reported findings
+5.perform another vuln scan and assessment
+6.document any findings and create repors for stakeholders
+7.conduct ongoing scanning to ensure continual remediation
+
+scan > patch > scan
+
+----
+
+Scope Considerations
+
+Vuln Scanner
+-hw appliance or sw application that is configured with a list of known weaknesses and exploits, and they can then scan for their presence in a host operating system or within a particular application
+
+Web App Vuln Scanners (like Nikto)
+-analyze applications for SQL injections, cross site scripting, and may even analyze the source code and database security to detect insecure programming practices
+
+Infrasturcture scanners can perform mapping and enumeration in the form of a host discovery scan
+
+Scope
+-range of hosts or subnets incl within a single scan job
+-important to adjust scope for efficient scan
+1.schedule scans for diff portions of the scope for diff times
+2.config scope based on a particular compliance objective
+3.rescan scopes with crit assets more often
+
+Internal vs External Scan
+-internal, from local to local network, can be performed with permissions (credentials) to get additional detail on vulns
+-external, against your network outside local, attackers POV
+
+----
+
+Scanner Types
+
+Vuln scanners operate in diff modes/configs
+
+Passive Scanning
+-an enumeration or vulnerability scan that analyzes only intercepted network traffic, rather than sending probes directly towards a target
+-least impact, least vuln id
+-might be used if under attack for example
+
+Active Scanning
+-an enumeration or vulnerability scan that analyzes the response to probes sent to a target
+-consume bandwidth and cpu
+-credentialed, non-cred, server-based or agent-based scan
+
+Credentialed Scan
+-given user acco to log-on to the target
+-will find more vulns and miss-configs
+
+Non-Credentialed Scan
+-sends test packets against the target without being able to log into that system or host
+-can probe with default PWs
+-appropriate for external assessment 
+
+Server-based scanning 
+-a vulnerability scan that's launched from one or more scanning servers against a target
+
+Agent-Based Scanning
+-is conducted using software applications that are installed locally on each target
+-reduces impact on the network and service outages
+-better for mobile and remote devices when offline
+-agents limited to particular OSes
+-agent sw could be compromised by malware
+
+Hybrid solutions often created to use server and agent based scanning
+
+
+----
+
+Scanning Parameters
+
+-vuln scanners must be configured with parameters to be effective and to work with segmentations and FW,IDS,IPS
+
+1.FW must allow agent connections and server-based scan
+2.IDS/IPS must allow exception for agent-based scanning
+
+Scanning Window = disable FW for scan
+- BAD IDEA
+- better install scanner into each segment and report back to central management server
+- or allow connections to other subnets
+
+
+----
+
+Scheduling and Constraints
+
+-scans should be done at least weekly
+
+When to do?
+1.deployment of new or updated systems
+2.id of new vulns
+3.following a sec breach
+4.regulatory or oversight requirement (PCI-DSS)
+5.as regulary scheduled
+
+Why not scan continuously?
+-feed updates
+-resources and bandwidth
+-timing and costs
+
+Data type will affect how frequently asset will be scanned
+
+PAM - privileged access management
+-used to mitigate teh risk of an inider threat
+-scanner gets admin account from PAM server
+-one-time PW
+
+----
+
+Vulnerability Feeds
+
+-synchronized lists of data and scripts that are used to check for vulnerabilities. If using Nessus, they like to call these plugins. If you're using OpenVOS, they call them NVTs or network vulnerability tests
+
+-many of these commercial vulnerability scanners require an ongoing paid subscription to access the feeds
+
+-SCAP (Security Content Automation Protocol)
+	-a NIST framework that outlines various accepted practices for automating vulnerability scanning by adhering to standards for scanning processes, results reporting and scoring, and vulnerability prioritization
+	-used to uphold internal/external compliance requirements
+
+-OVAL (Open Vulnerability and Assessment Language)
+	-an XML schema for describing system security states and querying vulnerability reports and information
+
+-XCCDF (Extensible Configuration Checklist Description Format)
+	-an XML schema for developing and auditing best-practice configuration checklist and rules
+
+
+----
+
+Scan Sensitivity
+
+-amount and intensity of vulns to test against a target
+
+-scan template, defines settings used for each vuln scan
+
+Discovery Scan
+-used to create and update an inventory of your assets and does this by conducting an enumeration of your network by mapping it out, and it finds all of the different targets without scanning for any vulnerabilities
+
+Fast/Basic Assessment Scan
+-scan that contains options for analyzing hosts for unpatched software vulnerabilities and configuration issues
+-may skip some plug-ins
+
+Full/Deep Assessment Scan
+-a comprehensive scan that forces the use of more plugin types. It's going to take a lot longer to conduct this host scanning, and it has more risk of causing a service disruption
+-will fully rescan every host
+
+Compliance Scans
+-based on a compliance template or a checklist, and this is going to ensure the controls and configuration settings are properly applied to a given target or host
+-PCI DSS req quarterly scans!
+
+----
+
+Scanning Risks
+
+-printers, VoIP phones, or embedded systems. These components can react unpredictably to any type of scanning
+-scan results should be protected/encrypted
+-use service accounts instead of local admins
+-opening ports for scan increases networks attack surface
+-static IPs minimize networks attack surface
+
+
+
+Scan Reports
+
+-Color-coded for vulns
+-highly confidential
+	-manual distribution allow better control
+
+----
+
+Common Identifiers
+
+CVE - Common Vulnerabilities and Exposures
+-commonly used scheme for id vulns developed by Mitre and adopted by NIST
+
+NVD - National Vulnerabitlity Database
+-superset of CVE db, maintained by NIST
+-contains analysis, criticality metrics, fix info/instructions
+
+CWE - Common Weakness Enumeration
+
+
+CAPEC - Common Attack Pattern Enumeration and Classification
+-knowledge base by MITRE
+-classifies attack patterns focused on app sec and exploit techniques
+
+
+CPE - Common Platform Enumeration
+-scheme for id HW devices, OS and applications
+
+CCE - Common Configuration Enumeration
+-scheme for provisioning secure config checks across multiple sources
+-collection of config "best-practice" statements
+
+----
+
+CVSS - Common Vulnerability Scoring System
+
+-risk management approach to quantifying vuln data, taking into account degree of risk to diff types of systems or information
+-useful in prioritizing response actions
+
+0					None
+0.1-3.9		Low
+4.0-6.9		Medium
+7.0-8.9		High
+9.0-10.0	Critical
+
+
+Base Metrics comprised of
+
+AV - Access Vector
+-P physical, L local, A adjacent network, N network
+
+AC - Access Complexity
+-H high or L low
+
+PR - Privileges Required
+-N none, L or H high
+
+UI - User Interaction
+-N none or R required
+
+S - Scope
+-U unchanged, C changed
+
+CIA - Confidentiality, Integrity, Availability
+-H high, M, L
+
+Temporal Metrics
+-exploit code maturity, remediation level and report confidence
+-how timely this info is?
+
+Environmental Metrics
+-composed of modified base metrics
+
+CVSS helpful but don't rely on them excusively
+
+
+----
+
+Vulnerability Reports
+
+-report that is not validated is useless
+
+True Positives
+-alert that matchs vuln and that vuln EXISTS on the system
+
+False Positives
+-alert that matchs vuln but vuln DOESNT exists on the system
+-time-consuming to investigate and waste of resources
+-adjust scans scopes
+-create new basealine for heuristic scan
+-add app to exception list
+-vuln exists but isn't exploitable
+	-exception management
+
+True Negatives
+-alert is not generated bcs there is no matching vuln on the system
+-works as intended
+
+False Negatives
+-alert is not generated even though there IS a matching vuln on the system
+-means that a potential vuln or missing patch is not id during scanning
+-dangerous
+-run repeated scans
+-use diff scan types or diff scanner
+-use diff sensitivities
+
+Validating scan reports
+-reconcile results
+	-scanners can misinterpret the info they receive from their probes
+-correlate the scan results with other data sources, by reviewing related system and network logs
+-compare the results to best practices, to determine if they are a high priority or a low risk
+-identify exception, for findings whose risk has been accepted or transferred
+
+----
+
+Nessus
+
+-commercial vuln scan by Tenable Network Security
+-on-premise and cloud-based
+-plug-ins can be created using Nessus Attack Scripting Language (NASL)
+
+
+----
+
+OpenVAS and Qualys
+
+OpenVAS
+-open-source vuln scanner
+-developmnet began when Nessus became commercial sw
+
+Qualys
+-cloud based vuln management solution
+-installs sensor agents
+
+
+
+Remediation and Mitigation
+
+-Vulns must be prioritized and then remediated
+
+Remediation
+-overall process of reducing exposure to the effects of risk factors
+
+Vuln reports offer recommended mitigations and fixes to security problems
+
+Remediation is going to mitigate risk exposure down to an acceptable level based on your organizational risk appetite
+-how critical is the system?
+-how difficult is the remediation?
+-how risky is the issue?
+
+Change control is important part of risk mitigation
+
+Risk Acceptance
+-there is no countermeasure that's put in place because the level of risk is low enough or the risk doesn't justify the cost to mitigate the associated risk
+-when risk is accepted, it should still be monitored
+
+Vuln should be rescanned and verified after mitigation is done
+
+----
+
+Configuration Baselines
+
+-settings for services and policy config for a server operating in a particular application role
+-any deviation from baseline must be remediated or its risk accepted
+-sec templates and baselines from vendors, 3rd parties and regulatory orgs
+
+CIS - Center of Internet Security
+-not-for-profit org that publishes top 20 Critical Security Controls
+1.inventory of authorized and unauthorized devices
+2.inventory of authorized and unauthorized software
+3.secure configurations for hardware and software on mobile devices, laptops, workstations, and servers
+4.continuous vulnerability assessment and remediation
+5.controlled use of administrative privileges
+-benchmarks are series of best-practices / recommendations
+
+Compensating Control
+-sec control that acts as a substitute for a principal control
+-must give same lvl of sec assurance as control it's replacing
+
+----
+
+Hardening and Patching
+
+-process by which a host or other device is made more secure through the reduction of a device's attack surface area
+
+Attack Surface
+-the services and the interfaces that allow a user or program to communicate with a target system
+-default installation should be considered a vuln
+
+System Hardening Security Checklist
+1.remove/disable not used/neede devices/services
+2.install os,app,firmware,driver patches regularly
+3.uninstall all unnecessary network protocols
+4.uninstall/disable unnecessary services and shared folders
+5.enforce ACL on all system resources
+6.restrict user accounts to the least privileges needed
+7.secure local admin/root account, rename and change PW
+8.disable unnecessary default users and group accounts
+9.verify permissions on system accounts/groups
+10.install antimalware sw and update it
+
+Consider how to harden systems against availability attacks
+
+
+Patch Management
+-id,test,deploy OS and app updates
+-patch often classified
+	-critical, security-critical, recommended and optional
+
+SCCM - System Center Configuration Manager
+
+Installing a patch can be availability risk to critical system that req reboot
+
+Patches may not exist for legacy, proprietary, ICS/SCADA or IOT systems and devices
+
+
+----
+
+Remediation Issues
+
+Numerous issues can arise during attempts to remediate vuln
+-is the risk high enough to spend time/money?
+-can compensating control be used instead?
+
+Legacy Systems
+-system that no longer is supported by vendor
+-no patches and sec updates
+
+Proprietary System
+-owned by its developer or vendor where the lack of vendor support could be an inhibitor to your remediation
+
+Organizationl Governance
+-system by which an organization makes and implements decisions in pursuit of its objectives
+
+Business Process Interruption
+-period of time when an organization's way of doing business operations is interrupted
+
+Degrading Functionality
+-a period of time when the organization systems are not performing at peak functionality, which could lead to business process interruption
+
+MOU - Memorandum of Understanding
+-usually as a preliminary or exploratory agreement to express an intent to work together that is not legally binding and does not involve the exchange of money
+-"handshake deal"
+
+SLA - Service Level Agreement
+-a contractual agreement that sets out the detailed terms under which an ongoing service will be provided
+
+
+Identity and Access Management
+
+-a security process that provides the identification, authentication, and authorization mechanisms for users, computers, and other entities to work with organizational assets like networks, operating systems and applications
+
+-every unique subject in the organization is identified and associated with an account
+	-personnel
+	-endpoints
+	-servers
+	-software
+	-roles
+		-support the identities of various assets by defining the resources an asset has permission to access based on the function that the asset is going to fulfill
+
+- IAM system is going to contain technical components, like directory services and repositories, access management tools and systems that are going to do auditing and reporting on ID management capabilities
+	-create/deprovision accounts
+	-manage accounts
+	-audit accounts
+	-evaluate identity-based threats
+	-maintain compliance
+
+-Risks
+	-User accounts
+	-Privileged accounts
+	-Shared accounts
+
+
+----
+
+Password Policies
+
+-policy is simply a policy document that promotes strong passwords by specifying a minimum password length, requiring complex passwords, requiring periodic password changes, and placing limits on the reuse of passwords
+
+-password protection policies, these are used to mitigate against the risk of attackers being able to compromise an account
+
+-complexity rules should not be enforced!!
+-aging policies should not be enforced
+-pw hints should not be used
+-pw reuse across multiple site is a huge vuln
+
+-a challenge question is going to ask the user for information that only they should know
+
+----
+
+SSO and MFA
+
+
+
+----
+
+Certificate Management
+
+-the practice of issuing, updating and revoking digital certificates
+-the principle means of assuring the identity of machines and application code is to use digital certificates
+
+sigcheck
+-a Sysinternals utility that allows you to verify root certificates in the local store against Microsoft's master trust list
+
+OpenSSL
+-a library of software functions that support SSL and TLS protocols
+
+certutil
+-a Windows utility that allows you to display certification authority, or CA configuration information. It'll allow you to configure certificate services, backup and restore CA components, and verify certificates, key pairs, and certificate chains
+
+"Tasks"
+-install, update, and validate trusted root certificates
+-deploying, updating, and revoking subject certificates
+-prevent the use of self-signed certificates
+-SSH key management
+
+
+----
+
+Federation
+
+-a process that provides a shared login capability across multiple systems in enterprises
+
+-a federation allows the company to trust accounts created and managed by a different network
+
+-trust relationships are set up between two different networks, the identity provider, and the service provider
+
+-the sign-on is provided as a service by the identity provider in a federation
+
+-changes to user accounts must be propagated quickly between the identity provider and service provider
+
+
+----
+
+Privilege Management
+
+-the use of authentication and authorization mechanisms to provide an administrator with centralized or decentralized control of user and group role-based privileged management
+
+-most of our policies are going to be designed with the principles of least privilege and separation of duty
+
+Separation of Duties
+- means of establishing checks and balances against the possibility of insider threats, because these insider threats can compromise critical systems and procedures
+
+
+Access Control Types
+
+-DAC Discretionary Access Control
+	-model where each resource is protected by an access control list or ACL and it's managed by the resource owner or owners
+
+-MAC Mandatory Access Control
+	-model where resources are protected by inflexible system defined rules where every resource or object and every user or subject is allocated a clearance level or a label
+	-SELinux provides method for implementing MAC
+
+-RBAC Role-Based Access Control
+	-an access control model where resources are protected by ACLs that are managed by administrators and can provide user permissions based on job functions 
+
+-ABAC Attribute-Based Access Control
+	-technique that evaluates a set of attributes that each subject possesses to determine if access should be granted
+	-can be used to implement controls for a separation of duties
+	-most complicated to implement, but also most flexible
+
+
+----
+
+IAM Auditing
+
+-IAM auditing is necessary for us to use, if we want to detect compromises of legitimate accounts, any kind of rogue account use, or an insider threat
+
+Audit logs
+-contain a log of all file access and authentications within a network-based operating system, an application or a service
+	-accounting for user actions
+	-detecting intrusions of attempted intrusions
+-backups
+	-bcs when logs reach their maximum allocated file size, they're going to actually start overwriting the older logs
+-logs must be kept secure and maintain their integrity
+-determining what to log can be a challenge
+	-account log-on and management events
+	-process creation
+	-object access
+	-changes to audit policy	
+	-changes to system sec and integrity
+
+-primary method we use to uncover account access violations is by conducting a log review
+	-multiple consecutive authentication failures
+	-unscheduled changes to a system's configuration
+	-sequencing errors or gaps in logs
+
+Recertification
+-a manual review of all the accounts, the permissions, the configurations, and the clearance levels, and you'll do this at a given interval
+
+
+----
+
+Conduct and Use Policies
+
+-Security Policies can be used to direct the behaviour of end-user employees
+
+Code of Conduct
+-a defined set of rules, ethics, and expectations for employees in a particular job role
+
+PUA - Privileged User Agreement
+-a contract with terms stating that a code of conduct for certain employees is assigned based on their higher level permissions on the network and data systems
+
+AUP - Acceptable Use Policy
+-policy that governs the employees use of company equipment and internet services
+
+
+
+Asset and Change Management
+
+-Important to know what is on the network in order to defend it
+
+Asset Tag
+-assign ID to asset and associated with inventory db
+-can be barcode label or RFID tag
+-correlate with asset records containing vendor documentation, configs, warranty info
+
+Change Management
+-changes to config of infosystems are monitored and controlled
+-each individual component should have separate document or db record that describes its initial state and changes
+	-config info
+	-patches installed
+	-backups records
+	-incident reports/issues
+-ensures all changes are planned and controlled to minize risk of service disruption
+	-major, significant, minor, normal
+
+RFC - Request for Change
+-document that lists reason for change and the procedures to implement that change
+-major and significant changes req approval from CAB (Change Advisory Board)
+-changes should be accompanied by a rollback/remediation plan
+
+
+----
+
+Network Architecture
+
+Physical Network
+-refers to the cabling, the switch ports, the router ports, and wireless access points that are supplying cabled and wireless network access and connectivity
+-physical sec controls are important to protect your physical network architecture security
+
+VPN - Virtual Private Network
+-secure tunnel between two endpoints via unsecure network
+-IPSec, SSH, TLS
+-VPN can use authentication and authorization to control access
+
+SDN - Software-Defined Networking
+-APIs and compatible HW allowing for programmable network appliances and systems
+- "physical networks virtualized"
+-SDN creates more complex networks due to their size, scope and ability to rapidly change
+-Control plane
+	-makes decisions about how traffic should be prioritized and secured and where it should be switched
+-Data plane
+	-handles the actual switching and routing of the traffic, and the imposition of access control lists for security
+-Management Plane
+	-Monitors traffic conditions and network status
+-SDN applications are used to define policy decisions on the control plane
+
+----
+
+Segmentation
+
+System Isolation (Air Gap)
+-physically separates network from others
+-can create management issues
+
+Physical Segmentation
+-each network has own switch, only devices connected to that switch can communicate with each other
+
+Virtual Segmentation
+-vlans, create equivalent segmentation that would occure with physical switches
+
+Zones
+-main unit of a logically segmented network where the sec config is the same for all hosts  within it
+
+ACL
+-list of IPS and ports that are allowed/denied access to the network segment or zone
+
+
+----
+
+Jumpbox
+
+Internet-facing Host
+-any host that accepts inbound connection from internet
+
+DMZ
+-segment insolated from the rest of private network by one or more fw that accept connections from the internet
+-everything behind DMZ is invisible to the outside network
+
+Bastion Hosts
+-hosts/servers in the DMZ which are not configured with any services that run on the local network
+
+-To configure devices in the DMZ, a jumpbox is utilized
+
+Jumpbox
+-hardened server that provides access to other hosts within the DMZ
+-admin will connect to jumpbox and the jumpbox connects to the DMZ
+-the jumpbox and the management workstation that you're using to connect to that jumpbox should have only the minimum required software to perform their job and they should be well hardened
+
+
+----
+
+Virtualization
+
+-a host computer that's installed with a hypervisor that can be used to install and manage multiple guest operating systems or virtual machines, known as VMs
+
+VDI (Virtual Desktop Infrastructure)
+-a virtualization implementation that separates the personal computing environment from a user's physical computer
+-server performs all the application processing and data storage
+-org can offload their IT infra to a 3rd party service company using VDI
+-users have no local processing ability if the server or network is down
+
+Containerization
+-a type of virtualization that's applied by a host operating system to provision an isolated execution environment for an application
+-containers will enforce resource separation at the operating system level
+-containers are logically isolated, they can't actually interface with each other
+-if host OS compromised, the containers are compromised
+
+
+----
+
+Virtualized Infrastructure
+
+Virtual Hosts
+-a virtualized computer that allows the installation and configuration of its own operating system
+-has to be patched and hardened, like physical hosts
+
+VM Sprawl
+-expansion of VMs being provisioned without proper change control procedures
+-VMs easy to remove and replace quickly
+
+Virtual Networks
+-VMs are interconnected using virtual switches, routers, and other virtualized networking equipment as part of your hypervisor
+-make sure you don't expose data or system access to different risks that could be associated with it
+-virtual switches don't always behave like physical switches, they often will fail, and they might not be able to isolate the traffic adequately between your different virtual hosts that are sitting on that hypervisor
+
+Management Interface
+-management application that's located either on the physical host that runs the virtual machine, or on a centralized platform that can oversee that virtual machine and many others across your network
+-utilize a separation of duties by having different administers for the hypevisor than for the servers and hosts
+-monitor the host platform for signs of resource exhaustion to prevent a DoS to hosted VMs
+
+
+----
+
+Honeypots
+
+Active Defense
+-the practice of responding to a threat by destroying or deceiving the threat actors capabilities
+-engagement with the adversary
+
+Honeypot
+-host or a server, that is set up with the purpose of learning attackers away from your actual network components that you care about, and instead allowing them to start attacking this other area
+
+Honeynet
+-entire network setup to entice attackers
+
+Attribution
+-identification and publication of an attacker's methods, techniques, and tactics as useful threat intelligence
+
+-Annoyance strategies often rely on obfuscation techniques
+	-bogus DNS entries
+	-Web server with decoy directories
+	-Port triggering and spoofing
+
+Hack Back
+-use offensive or counterattacking techniques to identify the attacker and degrade their capabilities
+-legal and reputational implications to consider and mitigate before using active defense strategies
+
+----
+
+Supply Chain Assessment
+
+-Secure working in an unsecure environment involves mitigating the risks of the supply chain
+
+-org must ensure the operation of every element (hw, firmware, driver, OS, app) is consistent and tamper resistant to establish a trusted computing environment
+
+Due Diligence
+-a legal principle that says the subject has used best practice or reasonable care when setting up, configuring and maintaining a system
+	-propersly resources cybersec program
+	-sec assurance and risk management processes
+	-product support life cycle
+	-sec controls for confidential data
+	-IR and forensics assitance
+	-general and historical company info
+-should apply to all suppliers and contractors
+
+Trusted Foundry
+-microprocessor manufacturing utility that is part of validated supply chain - hw/sw doesn't deviate from its documented function
+-Trusted Foundry Program operated by DoD
+
+HW Source Authenticity
+-process of ensuring that HW is procured tamper-free from trusted suppliers
+-greater risk obtaining counterfeited/compromised devices from second-hand or aftermarket
+
+
+----
+
+Root of Trust
+
+HW Root of Trust (ROT)
+
+-cryptographic module embedded within a system that can endorse trusted execution and attest to boot settings and metrics
+
+-a root of trust is used to scan the boot metrics to the system and the operating system files, and it verifies their signatures
+
+TPM - Trusted Platform Module
+-a specification for hardware-based storage of digital certificates, keys, hash passwords, and other user and platform identification information
+- can be managed in Windows via "tpm.msc" console or group policy
+
+HSM - Hardware Security Module
+-an appliance for generating and storing cryptographic keys that is less susceptible to tampering and insider threats thing using storage-based solutions
+
+Anti-Tamper
+-methods that make it difficult for an attacker to alter the authorized execution of software
+	-FPGA -field programmable gate array
+	-PUF - physically unclonable function
+
+
+----
+
+Trusted Firmware
+
+-Firmware exploit is going to give an attacker an opportunity to run any code at the highest level of CPU privilege
+
+UEFI - unified extensible firmware interface
+-a type of system firmware providing support for 64-bit CPU operations at boot. It also gives you a full GUI and mouse operations at boot, and better boot security
+
+-Secure Boot, a feature of UEFI that prevents unwanted processes from executing during the boot operation
+
+Measured Boot
+-a UEFI feature that gathers secure metrics to validate the boot process in an attestation report
+
+Attestation
+-a claim that the data presented in a report is valid, and it does this by digitally signing it using the TPM's private key
+
+eFUSE
+-a means for software or firmware to permanently alter the state of a transistor on a computer chip
+
+Trusted Firmware Updates
+-a firmware update that is digitally signed by the vendor and trusted by the system before it's installed
+
+Self-Encrypting Drives
+-disk drives where the controller can automatically encrypt the data that is written to it
+
+
+----
+
+Security Processing
+
+-a mechanism for ensuring the confidentiality, integrity and availability of software code and data as it's executed in volatile memory
+
+Processor Security Extensions
+-low-level CPU changes and instructions that enable secure processing
+-AMD: SME (sec memory encryption) or SEV (sec encr virtualization)
+-INTEL: TXT(trusted exec techn) or SGX(sw guard extension)
+
+Trusted Execution
+-The CPU's security extension invoke TPM and a secure boot attestation to ensure a trusted operating system is running
+
+Secure Enclave
+-an extension that allows a trusted process to create an encrypted container for sensitive data
+
+Atomic Execution
+-certain operations that should only be performed once or not at all, such as initializing a memory location
+
+Bus Encryption
+-data that is encrypted by an application prior to being placed on the data bus
+-ensures that the device at the end of the bus is trusted to decrypt the data
+
+
+
+
+Mobile Vulnerabilites
+
+BYOD problems
+-Deperimeterization
+-Unpatched and Unsecured Devices
+-Strained Infrastructure
+-Forensic Complications
+-Lost or Stolen Devices
+
+-Zero-day exploits used by ATPs against high value targets
+
+MDM Mobile Device Management
+-the process and supporting technologies for tracking, controlling and securing the organization's mobile infrastructure
+
+EMM Enterprise Mobility Management
+-a Mobile Device Management suite with broader capabilities. such as identification and application management
+
+-Device enrollment and authentication
+-Remote lock and remote wipe
+-Id device locations
+-Patch and update deployments
+-Preventing root/jailbreaks
+-encrypted containers for data
+-Restricting features/services
+
+MDM/EMM can be used to manage incidents and conduct investigations
+
+
+----
+
+IoT Vulnerabilites
+
+-group of objects, electronic or not, connected to Internet by using embedded components
+-most run on linux or android
+
+
+----
+
+Embedded System Vulnerabilites
+
+-computer system designed for specific dedicated function
+-static environments, frequent changes not made/allowed
+-may have very little support for id and correct sec issues
+
+PLC Programmable Logic Controller
+-a type of computer that is designed for deployment in industrial or outdoor setting, and it can automate and monitor mechanical systems
+-PLC firmware can be patched and reprogrammed
+
+SoC System-on-Chip
+-processor integrates the platform functionality of multiple logical controllers onto a single chip
+-can be power efficient and used with embedded systems
+
+RTOS Real-Time Operating System
+-a type of operating systemthat prioritizes deterministic execution of operatio to ensure consistent response for time-critical tasks
+
+-embedded systems typically can't tolerate reboots or crashes, and they have to have these response times that are predictable within milliseconds tolerances
+
+FPGA Field Programmable Gate Array
+-processor that can be programmed to perform a specific function by a customer, rather than at the time of manufacture
+-end customer can config the programming logic to run specific app insted of using an ASIC (Application-specific integrated circuit)
+
+
+----
+
+ICS & SCADA Vulnerabilites
+
+OT - Operational Technology
+-a communications network that's designed to implement an industrial control system rather than data networking
+
+-industrial system prioritize A and I over C
+
+
+ICS Industrial Control Systems
+-network that manages embedded devices
+-used for electri power stations, water supplier, telecommunications, defense needs...
+
+Fieldbus
+-a digital serial data communications that are used in operational technology networks to link different PLCs together
+
+HMI Human-Machine Interface
+-input and output controls on a PLC that allows a user to configure and monitor the system
+
+-ICS is all about managing process automation by linking together these PLCs, using the Fieldbus to make changes in the physical world (valves, motors etc)
+
+Data Historian
+-a software that aggregates and catalogs data from multiple sources within an industrial control system
+
+
+SCADA Supervisory Control and Data Acquisition
+-type of industrial control system, that manages large-scale, multi-site devices and equipment spread over a geographic region
+-"multiple ICS connceted"
+-typically runs a software on ordinary computers and it gathers data and manages it across the different plant devices, and the different equipment, that has embedded PLCs
+
+Modbus
+-a comm protocol used in operational technology networks
+-gives controls servers and SCADA hosts the ability to query and change the config of each PLC
+
+
+----
+
+Mitigating Vulnerabilites
+
+1.Establish admin control over OT networks by recruiting staff with relevant expertise
+
+2.Implement minimum network links by disabling unnecessary links, services and protocols
+
+3.Develop and test patch management program for OT networks
+
+4.Perform regular audist of logical and physical access to systems to detect possible vulns and intrusions
+
+Enumeration tools and vuln scanners can cause problems on OT networks
+- most likely use something like Wireshark
+
+----
+
+Premise System Vulnerabilites
+
+-premise system is a system used for building automation and physical access security
+-a lot of these system designs are going to allow for monitoring to be available across the corporate data network or even directly from the internet
+
+BAS Building Automation System
+-components and protocols that facilitate the centralized configuration and monitoring of your different mechanical and electrical systems within offices or data centers
+
+
+-process and memory vulns in PLC
+-plaintext credentials or keys in application code
+-code injection via web user interface
+-DoS condition coulds be caused by affecting building automation systems like HVAC
+
+
+PACS - Physical Access Control System
+-components and protocols that facilitate the centralized configuration and monitoring of security mechanisms within offices and data centers
+-PACS can either be implemented as part of your building automation system or as part of a separate system
+-often installed/maintained by 3rd party supplier and omitted from risk and vuln assessments by analysts
+
+
+----
+
+Vehicular Vulnerabilites
+
+-vehicles connect numerous subsystems over a Controller Area Network (CAN)
+
+CAN
+-a digital serial data communications network that's used within a vehicle
+
+-the primary method that we use is known as an OBD-II, which has an Onboard Diagnostic module
+
+-no concept of source addressing or message authentication within the CAN bus
+
+
+-Attach the exploit to OBD-II
+-Exploit over onboard cellular
+-Exploit over onboard WiFi
